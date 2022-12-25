@@ -7,7 +7,7 @@
           <h2>Go<span>Tickets</span></h2>
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore dicta impedit soluta vero nesciunt sequi
-            modi cum ut suscipit. Molestiae nobis aut corrupti placeat mollitia sunt, ipsa quo autem tempora delectus
+            modi cum ut suscipit. <span class="bold">Molestiae nobis aut corrupti placeat mollitia sunt</span>, ipsa quo autem tempora delectus
             minima magni laudantium iure quisquam debitis beatae excepturi explicabo!
           </p>
           <div class="hero__buttons">
@@ -53,18 +53,16 @@ export default {
       display: flex;
       align-items: center;
       gap: 30px;
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.25);
-      box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      @include glass-card;
+      flex-direction: column;
+      margin:15px 15px;
+      @media(min-width:992px){
+        flex-direction: row;
+      }
 
       img {
-        max-width: 550px;
+        max-width: 500px;
+        width: 100%;
       }
 
       .content {

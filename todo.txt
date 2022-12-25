@@ -1,6 +1,1 @@
-Font awesome
-pinia
-axios
-git
-menu top + menu mobile to add Event map + Account
 Wyszukiwarka hero section

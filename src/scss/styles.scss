@@ -3,13 +3,18 @@
 @import './reset';
 #app {
     font-family: 'Quicksand', sans-serif;
+    //to make mobile nav not overlay content
+    padding-bottom: 90px;
+    @media(min-width: 768px) {
+        padding-bottom: 0;
+    }
 }
 
 .container {
     width: calc(100% - 30px);
-    margin: 0 auto;
+    margin: 15px auto;
     @media(min-width: 768px) {
-        width: 90%;
+        width: 92%;
     }
     @media(min-width:992px) {
         width: 80%;
@@ -21,4 +26,8 @@
         width: 65%;
         max-width: 1200px;
     }
+}
+
+.bold {
+    font-weight: bold;
 }

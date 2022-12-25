@@ -4,7 +4,7 @@
     background-color: $background;
     border-radius: 6px;
     border-width: 0;
-    box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .1) 0 2px 5px 0, rgba(0, 0, 0, .07) 0 1px 1px 0;
+    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset, rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
     box-sizing: border-box;
     color: $text-color;
     cursor: pointer;
@@ -19,13 +19,13 @@
     text-align: center;
     text-transform: none;
     transform: translateZ(0);
-    transition: all .2s, box-shadow .08s ease-in;
+    transition: all 0.2s, box-shadow 0.08s ease-in;
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
     font-weight: 500;
     &:focus {
-        box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+        box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset, rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0, rgba(50, 151, 211, 0.3) 0 0 0 4px;
     }
     &:hover {
         transform: translateY(-2px);
@@ -44,4 +44,35 @@
     &:hover {
         background: #f7f7f7;
     }
+}
+
+@mixin link {
+    transition: 0.2s;
+    &:hover {
+        transition: 0.2s;
+        color: $secondary-blue;
+        transform: translateY(-1px);
+    }
+}
+
+@mixin link-mobile-nav {
+    transition: 0.3s;
+    &:hover {
+        transition: 0.3s;
+        color: $secondary-blue;
+        transform: translateY(-3px);
+        svg {
+            box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset, rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0, rgba(50, 151, 211, 0.3) 0 0 0 4px;
+        }
+    }
+}
+
+@mixin glass-card {
+    border-radius: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
 }
