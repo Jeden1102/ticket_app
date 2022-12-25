@@ -7,4 +7,5 @@ import { faHouse, faCalendarDays, faCircleInfo, faUser } from "@fortawesome/free
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createPinia } from 'pinia'
 library.add(faHouse, faCalendarDays, faCircleInfo, faUser);
+
 createApp(App).use(createPinia()).component("font-awesome-icon", FontAwesomeIcon).use(router).mount('#app')

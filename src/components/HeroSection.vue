@@ -1,7 +1,7 @@
 <template>
   <div class="hero__section">
     <div class="hero__section__content">
-      <div class="container">
+      <div class="container container-override">
         <img src="../assets/hero-section/festival.svg" alt="">
         <div class="content">
           <h2>Go<span>Tickets</span></h2>
@@ -20,13 +20,18 @@
           </div>
         </div>
       </div>
+    <HeroSectionSearch/>
     </div>
   </div>
 </template>
 
 <script>
+import HeroSectionSearch from '@/components/HeroSectionSearch.vue';
 export default {
   name: 'HeroSection',
+  components:{
+    HeroSectionSearch
+  },
   props: {
     msg: String
   }
@@ -37,19 +42,20 @@ export default {
 <style scoped lang="scss">
 .hero__section {
   background: url('../assets/hero-section/hero-section-bg-1.jpg');
-  min-height: calc(100vh - 97px);
+  min-height: calc(85vh - 97px);
   background-size: cover;
   background-repeat: no-repeat;
 
   &__content {
     width: 100%;
-    min-height: calc(100vh - 97px);
+    min-height: calc(85vh - 97px);
     background: rgba(0, 0, 0, .7);
+    flex-direction: column;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    .container {
+    .container-override {
       display: flex;
       align-items: center;
       gap: 30px;
