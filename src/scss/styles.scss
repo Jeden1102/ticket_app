@@ -4,9 +4,9 @@
 #app {
     font-family: 'Quicksand', sans-serif;
     //to make mobile nav not overlay content
-    padding-bottom: 90px;
+    padding-bottom: 220px;
     @media(min-width: 768px) {
-        padding-bottom: 0;
+        padding-bottom: 200px;
     }
 }
 
@@ -30,4 +30,10 @@
 
 .bold {
     font-weight: bold;
+}
+
+.multiselect__option {
+    &--highlight {
+        background-color: $secondary-blue !important;
+    }
 }

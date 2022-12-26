@@ -76,3 +76,38 @@
     -webkit-backdrop-filter: blur(4px);
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
+
+@mixin floating-input-box {
+    label {
+        position: relative;
+        border-bottom: 1px solid #ddd;
+        color: white;
+    }
+    input {
+        width: 100%;
+        padding: 10px 0px;
+        margin-top: 20px;
+        border: none;
+        outline: none;
+        background: none;
+        color: white;
+        font-weight: bold;
+    }
+    input::placeholder {
+        opacity: 0;
+    }
+    span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateY(30px);
+        font-size: 0.825em;
+        transition-duration: 300ms;
+    }
+    label:focus-within>span,
+    input:not(:placeholder-shown)+span {
+        color: white;
+        transform: translateY(0px);
+        font-size: 0.7rem;
+    }
+}
