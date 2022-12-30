@@ -5,6 +5,7 @@
     font-family: 'Quicksand', sans-serif;
     //to make mobile nav not overlay content
     padding-bottom: 220px;
+    overflow-x: hidden;
     @media(min-width: 768px) {
         padding-bottom: 200px;
     }
@@ -30,6 +31,10 @@
 
 .bold {
     font-weight: bold;
+}
+
+.flex {
+    display: flex;
 }
 
 .multiselect__option {

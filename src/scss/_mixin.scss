@@ -111,3 +111,12 @@
         font-size: 0.7rem;
     }
 }
+
+@mixin badge-base($bg, $color) {
+    padding: 5px 10px;
+    border-radius: 30px;
+    font-weight: bold;
+    color: $color;
+    border: 2px solid $bg;
+    background-color: $bg;
+}
