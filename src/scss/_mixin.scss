@@ -120,3 +120,11 @@
     border: 2px solid $bg;
     background-color: $bg;
 }
+
+@mixin base-heading() {
+    font-size: 2rem;
+    font-weight: 200;
+    span {
+        font-weight: 600;
+    }
+}
