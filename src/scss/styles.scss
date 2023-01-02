@@ -12,10 +12,10 @@
 }
 
 .container {
-    width: calc(100% - 30px);
+    width: calc(100% - 80px);
     margin: 15px auto;
     @media(min-width: 768px) {
-        width: 92%;
+        width: 90%;
     }
     @media(min-width:992px) {
         width: 80%;

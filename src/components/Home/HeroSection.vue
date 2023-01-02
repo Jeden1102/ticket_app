@@ -2,7 +2,7 @@
   <div class="hero__section">
     <div class="hero__section__content">
       <div class="container container-override">
-        <img src="../assets/hero-section/festival.svg" alt="">
+        <img src="../../assets/hero-section/festival.svg" alt="">
         <div class="content">
           <h2>Go<span>Tickets</span></h2>
           <p>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import HeroSectionSearch from '@/components/HeroSectionSearch.vue';
+import HeroSectionSearch from '@/components/Home/HeroSectionSearch.vue';
 export default {
   name: 'HeroSection',
   components:{
@@ -41,7 +41,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .hero__section {
-  background: url('../assets/hero-section/hero-section-bg-1.jpg');
+  background: url('../../assets/hero-section/hero-section-bg-1.jpg');
   min-height: calc(85vh - 97px);
   background-size: cover;
   background-repeat: no-repeat;

@@ -28,7 +28,7 @@
 <script>
 import VueMultiselect from 'vue-multiselect'
 import { ref } from 'vue';
-import router from "../router";
+import router from "../../router";
 export default {
   components: { VueMultiselect },
   setup() {

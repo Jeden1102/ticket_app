@@ -50,6 +50,7 @@ export default {
     @media(min-width:992px) {
         display: flex;
         align-items: center;
+        padding:30px 0;
     }
 
     &__image {

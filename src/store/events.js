@@ -24,9 +24,6 @@ export const useEventsStore = defineStore('events', {
             }
             axios.get(`${process.env.VUE_APP_API_URL}events${groupingString}${filterString}?${pagination}&populate=*`).then(res => {
                 this[filter.name] = res.data.data;
-                console.log(`${process.env.VUE_APP_API_URL}events${groupingString}${filterString}?${pagination}&populate=*`)
-                console.log(filter.name)
-                console.log(res.data.data)
             }).catch(err => {
                 console.log(err)
             })

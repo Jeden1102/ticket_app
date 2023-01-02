@@ -5,14 +5,20 @@
     <EventsSplide :events="eventsStore.eventsNewest" title="Newest"/>
     <EventsSplide :events="eventsStore.eventsTrending" title="Trending"/>
     <ClientReviews :reviews="reviewsStore.reviews"/>
+    <OwnEvent/>
+    <OurClients/>
+    <Pricing/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HeroSection from '@/components/HeroSection.vue'
+import HeroSection from '@/components/Home/HeroSection.vue'
 import EventsSplide from '@/components/EventsSplide.vue';
-import ClientReviews from '@/components/ClientReviews.vue';
+import ClientReviews from '@/components/Home/ClientReviews.vue';
+import OwnEvent from '@/components/Home/OwnEvent.vue';
+import OurClients from '@/components/Home/OurClients.vue';
+import Pricing from '@/components/Home/Pricing.vue';
 import { useEventsStore } from '../store/events';
 import { useReviewsStore } from '../store/reviews';
 import { onMounted } from 'vue';
@@ -21,7 +27,10 @@ export default {
   components: {
     HeroSection,
     EventsSplide,
-    ClientReviews
+    ClientReviews,
+    OwnEvent,
+    OurClients,
+    Pricing
   },
   setup() {
     const eventsStore = useEventsStore();
