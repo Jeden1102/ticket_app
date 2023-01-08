@@ -6,9 +6,13 @@
           layer-type="base"
           name="OpenStreetMap"
         ></l-tile-layer>
-        <l-marker :lat-lng="[47.41322, -1.219482]">
-        <l-icon :icon-url="require('../../assets/events/party.png')" :icon-size="[30,30]"/>
+        <marker-cluster
+        :options="{ showCoverageOnHover: false, chunkedLoading: true }"
+      >
+        <l-marker v-for="event in eventsStore.events" :key="event.id" :lat-lng="[event.attributes.geolocation.lat, event.attributes.geolocation.lon]">
+        <l-icon :icon-url="setIconImg(event.attributes.event_category.data.attributes.Name)" :icon-size="[30,30]"/>
       </l-marker>
+      </marker-cluster>
       </l-map>
     </div>
   </template>
@@ -16,19 +20,32 @@
   <script>
   import "leaflet/dist/leaflet.css";
   import { LMap, LTileLayer, LMarker, LIcon } from "@vue-leaflet/vue-leaflet";
-  
+import { useEventsStore } from '../../store/events';
+import { onMounted } from "vue";
+import MarkerCluster from "./MarkerCluster.vue";
   export default {
     components: {
       LMap,
       LTileLayer,
       LMarker,
-      LIcon
+      LIcon,
+      MarkerCluster,
     },
-    data() {
+    
+    setup(){
+      const eventsStore = useEventsStore()
+      function setIconImg(category){
+        const mapCategory = {'Art':'art.png','Dance':'dance.png','Music':'music.png','Other':'other.png','Sport':'sport.png'}
+        return require(`../../assets/events/${mapCategory[category]}`);
+      }
+      onMounted(()=>{
+        eventsStore.getEvents('all')
+      })
       return {
-        zoom: 2,
-      };
-    },
+        eventsStore,
+        setIconImg
+      }
+    }
   };
   </script>
   
