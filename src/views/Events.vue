@@ -26,36 +26,45 @@ export default {
 
 <style lang="scss" scoped>
 .events__routing {
-    display:flex;
-    gap:24px;
+    display: flex;
+    gap: 24px;
     justify-content: center;
     flex-direction: column;
-    @media(min-width:768px){
+
+    @media(min-width:768px) {
         flex-direction: row;
     }
+
     a {
-        display:flex;
+        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap:24px;
+        gap: 24px;
         @include glass-card;
         transition: .2s;
-        &.router-link-active{
+
+        &.router-link-active {
             background: $secondary-blue;
-            color:white;
+            color: white;
             font-weight: 500;
         }
-        &:hover{
+
+        &:hover {
             transform: translateY(-4px);
         }
-        p{
-            font-size:1.5rem;
+
+        p {
+            font-size: 1.5rem;
         }
-        img{
+
+        img {
             max-height: 250px;
-            width:100%;
+            width: 100%;
         }
     }
+}
+.events__view{
+    margin-top: 48px;
 }
 </style>
