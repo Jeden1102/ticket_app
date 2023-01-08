@@ -204,7 +204,8 @@ ul {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    width:100%;
+    width:70%;
+    margin:0 auto;
 }
 
 ul li {

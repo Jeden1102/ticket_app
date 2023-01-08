@@ -8,6 +8,7 @@
     <OwnEvent/>
     <OurClients/>
     <Pricing/>
+    <Blogs/>
   </div>
 </template>
 
@@ -19,6 +20,7 @@ import ClientReviews from '@/components/Home/ClientReviews.vue';
 import OwnEvent from '@/components/Home/OwnEvent.vue';
 import OurClients from '@/components/Home/OurClients.vue';
 import Pricing from '@/components/Home/Pricing.vue';
+import Blogs from '@/components/Home/Blogs.vue';
 import { useEventsStore } from '../store/events';
 import { useReviewsStore } from '../store/reviews';
 import { onMounted } from 'vue';
@@ -30,7 +32,8 @@ export default {
     ClientReviews,
     OwnEvent,
     OurClients,
-    Pricing
+    Pricing,
+    Blogs
   },
   setup() {
     const eventsStore = useEventsStore();

@@ -69,7 +69,6 @@ export default {
 <style lang="scss" scoped>
 .our__clients{
     margin-top: 64px;
-    @include glass-card;
     padding:40px;
     h2{
         text-align: center;
