@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 export const useEventsStore = defineStore('events', {
     state: () => ({
+        eventCategories: null,
         events: null,
         eventsFeatured: null,
         eventsNewest: null,
@@ -31,6 +32,13 @@ export const useEventsStore = defineStore('events', {
                 } else {
                     this[filter.name] = res.data.data;
                 }
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        getEventCategories() {
+            axios.get(`${process.env.VUE_APP_API_URL}event-categories`).then(res => {
+                this.eventCategories = res.data.data
             }).catch(err => {
                 console.log(err)
             })

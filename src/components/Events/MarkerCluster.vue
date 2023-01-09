@@ -105,7 +105,7 @@
     background: none;
     div{
         background: $secondary-blue;
-        color:white;
+        color:white; 
     }
 }
 </style>

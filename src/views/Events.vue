@@ -9,13 +9,18 @@
             <img src="../assets/events/event-list.svg" alt="">
         </router-link>
     </div>
+    <EventsFilters/>
     <div class="events__view container">
         <router-view></router-view>
     </div>
 </template>
 
 <script>
+import EventsFilters from '../components/Events/EventsFilters.vue';
 export default {
+    components:{
+        EventsFilters
+    },
     setup() {
 
 
@@ -59,7 +64,7 @@ export default {
         }
 
         img {
-            max-height: 250px;
+            max-height: 150px;
             width: 100%;
         }
     }

@@ -42,3 +42,11 @@
         background-color: $secondary-blue !important;
     }
 }
+
+.v3dp__input_wrapper {
+    input {
+        border: 1px solid $primary-blue !important;
+        padding: 10px !important;
+        border-radius: 5px;
+    }
+}

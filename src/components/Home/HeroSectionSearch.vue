@@ -37,7 +37,6 @@ export default {
     const eventPlace = ref(null);
     const options = ['Music', 'Concert', 'Stand-up', 'Rap battle', 'Others'];
     function searchEvents() {
-      console.log("ok")
       router.push({ name: 'Events', query: { event_category: eventCategory.value, event_name: eventName.value, event_place: eventPlace.value } })
     }
     return {
