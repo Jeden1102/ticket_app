@@ -9,7 +9,7 @@
         <marker-cluster
         :options="{ showCoverageOnHover: false, chunkedLoading: true }"
       >
-        <l-marker v-for="event in eventsStore.events" :key="event.id" :lat-lng="[event.attributes.geolocation.lat, event.attributes.geolocation.lon]">
+        <l-marker v-for="event in eventsStore.events" :key="event.id" :lat-lng="[event.attributes.geolocation.attributes.lat, event.attributes.geolocation.attributes.lon]">
         <l-icon :icon-url="setIconImg(event.attributes.event_category.data.attributes.Name)" :icon-size="[30,30]"/>
       </l-marker>
       </marker-cluster>
@@ -39,7 +39,7 @@ import MarkerCluster from "./MarkerCluster.vue";
         return require(`../../assets/events/${mapCategory[category]}`);
       }
       onMounted(()=>{
-        eventsStore.getEvents('all')
+        eventsStore.getEvents({filters:eventsStore.filters})
       })
       return {
         eventsStore,
