@@ -3,12 +3,13 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faHouse, faCalendarDays, faCircleInfo, faUser, faFire, faLocationDot, faX, faCheck } from "@fortawesome/free-solid-svg-icons";
-import { faFacebook, faInstagram, faPinterest } from '@fortawesome/free-brands-svg-icons'
+import { faHouse, faCalendarDays, faCircleInfo, faUser, faFire, faLocationDot, faX, faCheck, faPhone, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faComments } from "@fortawesome/free-regular-svg-icons";
+import { faFacebook, faInstagram, faPinterest, faRocketchat } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createPinia } from 'pinia'
 import VueNumber from 'vue-number-animation'
-library.add(faHouse, faCalendarDays, faCircleInfo, faUser, faFire, faLocationDot, faX, faCheck, faFacebook, faInstagram, faPinterest);
+library.add(faHouse, faCalendarDays, faCircleInfo, faUser, faFire, faLocationDot, faX, faCheck, faFacebook, faInstagram, faPinterest, faRocketchat, faComments, faPhone, faPlus, faMinus);
 import VueGoogleMaps from '@fawmi/vue-google-maps'
 
 

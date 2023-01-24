@@ -42,6 +42,13 @@ const routes = [{
             return import ('../views/Account.vue')
         }
     },
+    {
+        path: '/faq',
+        name: 'Faq',
+        component: function() {
+            return import ('../views/Faq.vue')
+        }
+    },
 ]
 
 const router = createRouter({

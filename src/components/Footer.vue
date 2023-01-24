@@ -33,7 +33,7 @@
                 <div class="footer__item footer__item--links">
                     <router-link :to="{ name: 'Home' }">About us</router-link>
                     <router-link :to="{ name: 'Home' }">Press</router-link>
-                    <router-link :to="{ name: 'Home' }">FAQ</router-link>
+                    <router-link :to="{ name: 'Faq' }">FAQ</router-link>
                     <router-link :to="{ name: 'Home' }">Help Center</router-link>
                     <router-link :to="{ name: 'Home' }">Privacy&Terms</router-link>
                 </div>
