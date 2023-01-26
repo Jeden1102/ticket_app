@@ -22,9 +22,16 @@
                 </div>
             </div>
         </div>
+        <div class="faq__container__bottom">
+            <h2>Still have questions?</h2>
+            <p>Can’t find the answer you’re looking for? Please chat to our friendly team.</p>
+            <router-link :to="{ name: 'About' }">
+                <span>Get in touch</span>
+            </router-link>
+        </div>
     </div>
 </template>
-
+`1`
 <script>
 import { useFaqsStore } from '../store/faqs';
 import { onMounted, ref } from 'vue';
@@ -74,6 +81,11 @@ export default {
         display: flex;
         gap: 24px;
         margin-top: 24px;
+        flex-direction: column;
+
+        @media(min-width:768px) {
+            flex-direction: row;
+        }
 
         h2 {
             margin: 8px 0 24px 0;
@@ -130,6 +142,32 @@ export default {
                     max-width: 500px;
                 }
             }
+        }
+    }
+
+    &__bottom {
+        margin-top: 48px;
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        p {
+            margin-top: 12px;
+        }
+
+        a {
+            display: flex;
+            align-items: center;
+            max-width: 200px;
+            justify-content: center;
+            margin-top: 16px;
+
+            span {
+                color: white;
+            }
+
+            @include button-primary();
         }
     }
 }

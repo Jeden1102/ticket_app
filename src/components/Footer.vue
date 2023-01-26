@@ -72,7 +72,7 @@ export default {
 <style lang="scss" scoped>
 .footer {
     margin-top: 48px;
-    background: #0A075F;
+    background: $primary-blue;
     padding: 25px 50px 15px 50px;
 
     @media(min-width:992px) {

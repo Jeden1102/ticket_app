@@ -68,6 +68,26 @@
     <div class="contact__boxes">
       <ContactBox v-for="box in boxes" :key="box.icon" :box="box" />
     </div>
+    <div class="about__section">
+      <h2>About the company</h2>
+      <p>Learn more about the company and the team behind it.</p>
+      <div class="content">
+        <div class="content__image">
+          <img src="../assets/contact/about.jpg" alt="">
+        </div>
+        <div class="content__content">
+          <span>Plan, create, have fun!</span>
+          <h2>We're only just getting started.</h2>
+          <div class="content__achievements">
+            <div v-for="achievement in achievements" :key="achievement.heading" class="achievement">
+              <h3>{{ achievement.heading }}</h3>
+              <p>{{ achievement.desc }}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 </template>
 
@@ -104,9 +124,36 @@ export default {
         icon: 'fa-solid fa-phone',
       }
     ]
+    const achievements = [
+      {
+        heading: "600+",
+        desc: "Events completed",
+      },
+      {
+        heading: "100k+",
+        desc: "Events attendants",
+      },
+      {
+        heading: "1200+",
+        desc: "Events creators",
+      },
+      {
+        heading: "2k+",
+        desc: "Positive reviews",
+      },
+      {
+        heading: "40+",
+        desc: "Product owners",
+      },
+      {
+        heading: "2+",
+        desc: "Years guarancy",
+      }
+    ]
 
     return {
-      boxes
+      boxes,
+      achievements
     }
   }
 }
@@ -220,5 +267,63 @@ export default {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
+}
+
+.about__section {
+  margin-top: 48px;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 500;
+  }
+
+  p {
+    margin-top: 12px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 48px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+
+    &__content {
+      span {
+        color: $secondary-blue;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: block;
+      }
+
+      .content__achievements {
+        margin-top: 24px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+
+        .achievement {
+          h3 {
+            font-size: 2.5rem;
+            font-weight: 500;
+            color: $secondary-blue;
+          }
+        }
+      }
+    }
+
+    &__image {
+      img {
+        max-width: 500px;
+        max-height: 600px;
+        border-radius: 5px;
+      }
+    }
+
+    @media(min-width:768px) {
+      flex-direction: row;
+    }
+  }
 }
 </style>
