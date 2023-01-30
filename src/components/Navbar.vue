@@ -12,7 +12,7 @@
                         icon="fa-solid fa-calendar-days" /></router-link>
                 <router-link :to="{ name: 'About' }"><span>About&Contact</span> <font-awesome-icon
                         icon="fa-solid fa-circle-info" /></router-link>
-                <router-link :to="{ name: 'Account' }"><span>Account</span> <font-awesome-icon
+                <router-link :to="{ name: 'LoginRegister' }"><span>Account</span> <font-awesome-icon
                         icon="fa-solid fa-user" /></router-link>
             </div>
         </nav>
@@ -59,6 +59,7 @@ export default {
         justify-content: space-evenly;
         align-items: center;
         box-shadow: 1px -21px 83px -40px rgba(66, 68, 90, 1);
+
         @media(min-width:768px) {
             position: relative;
             height: unset;

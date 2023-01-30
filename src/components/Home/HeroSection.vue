@@ -7,12 +7,13 @@
           <h2>Go<span>Tickets</span></h2>
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore dicta impedit soluta vero nesciunt sequi
-            modi cum ut suscipit. <span class="bold">Molestiae nobis aut corrupti placeat mollitia sunt</span>, ipsa quo autem tempora delectus
+            modi cum ut suscipit. <span class="bold">Molestiae nobis aut corrupti placeat mollitia sunt</span>, ipsa quo
+            autem tempora delectus
             minima magni laudantium iure quisquam debitis beatae excepturi explicabo!
           </p>
           <div class="hero__buttons">
             <button class="hero__btn hero__btn--events">
-              Events list <font-awesome-icon icon="phone" />
+              Events list
             </button>
             <button class="hero__btn hero__btn--create-event">
               Create an event
@@ -20,7 +21,7 @@
           </div>
         </div>
       </div>
-    <HeroSectionSearch/>
+      <HeroSectionSearch />
     </div>
   </div>
 </template>
@@ -29,7 +30,7 @@
 import HeroSectionSearch from '@/components/Home/HeroSectionSearch.vue';
 export default {
   name: 'HeroSection',
-  components:{
+  components: {
     HeroSectionSearch
   },
   props: {
@@ -62,8 +63,9 @@ export default {
       gap: 30px;
       @include glass-card;
       flex-direction: column;
-      margin:15px 15px;
-      @media(min-width:992px){
+      margin: 15px 15px;
+
+      @media(min-width:992px) {
         flex-direction: row;
       }
 
