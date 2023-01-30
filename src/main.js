@@ -12,9 +12,20 @@ import VueNumber from 'vue-number-animation'
 library.add(faHouse, faCalendarDays, faCircleInfo, faUser, faFire, faLocationDot, faX, faCheck, faFacebook, faInstagram, faPinterest, faRocketchat, faComments, faPhone, faPlus, faMinus);
 import VueGoogleMaps from '@fawmi/vue-google-maps'
 
+import { createValidation } from 'vue3-form-validation'
+
+const validation = createValidation({
+    defaultValidationBehavior: 'lazy',
+    validationBehavior: {
+        change: ({ force }) => !force,
+        lazy: ({ touched }) => touched,
+        submit: ({ submit, hasError }) => submit || hasError
+    }
+})
 
 const app = createApp(App);
 app.use(createPinia());
+app.use(validation);
 app.use(VueNumber)
     .use(VueGoogleMaps, {
         load: {

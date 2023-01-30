@@ -1,7 +1,8 @@
 <template>
-  <Navbar/>
-  <router-view/>
-  <Footer/>
+  <Navbar />
+  <router-view />
+  <notifications />
+  <Footer />
 </template>
 
 <script>
@@ -19,6 +20,4 @@ export default {
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 @import './scss/styles.scss';
-
-
 </style>
