@@ -1,19 +1,30 @@
 <template>
   <Navbar />
-  <router-view />
-  <notifications />
+  <div class="app-content">
+    <router-view />
+  </div>
   <Footer />
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
-
+import { onMounted } from 'vue';
+import { useAuthStore } from './store/auth';
 export default {
   name: 'Home',
   components: {
     Navbar,
     Footer
+  },
+  setup() {
+    const authStore = useAuthStore();
+    onMounted(() => {
+      authStore.checkUserLoggedIn()
+    })
+    return {
+      authStore
+    }
   }
 }
 </script>

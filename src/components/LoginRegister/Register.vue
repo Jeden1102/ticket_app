@@ -55,9 +55,7 @@
         <div class="register__box">
             <button @click="submitForm">Register</button>
         </div>
-        <div v-if="error" class="error-box error-box--main">
-            {{ error }}
-        </div>
+        <span class="error-box login-error" v-if="authStore.loginError"> {{ authStore.loginError }} </span>
     </div>
 </template>
 

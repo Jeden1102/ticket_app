@@ -12,18 +12,21 @@
                         icon="fa-solid fa-calendar-days" /></router-link>
                 <router-link :to="{ name: 'About' }"><span>About&Contact</span> <font-awesome-icon
                         icon="fa-solid fa-circle-info" /></router-link>
-                <router-link :to="{ name: 'LoginRegister' }"><span>Account</span> <font-awesome-icon
-                        icon="fa-solid fa-user" /></router-link>
+                <router-link :to="{ name: authStore.user ? 'Account' : 'Login' }"><span>Account</span>
+                    <font-awesome-icon icon="fa-solid fa-user" /></router-link>
             </div>
         </nav>
     </div>
 </template>
 
 <script>
+import { useAuthStore } from '../store/auth';
 export default {
     setup() {
-
-        return {}
+        const authStore = useAuthStore()
+        return {
+            authStore
+        }
     }
 }
 </script>

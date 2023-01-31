@@ -14,6 +14,7 @@
             </label>
         </div>
         <span class="error-box" v-if="v$.password.$error"> {{ v$.password.$errors[0].$message }} </span>
+        <span class="error-box login-error" v-if="authStore.loginError"> {{ authStore.loginError }} </span>
         <div class="login__box login__box--checkbox">
             <label for="cbx-12">Remember me</label>
             <div class="checkbox-wrapper-12">
@@ -71,10 +72,15 @@ export default {
                 error.value = "Please fill out all fields correctly."
                 return;
             }
-            authStore.login({
-                identifier: userData.identifier,
-                password: userData.password,
-            })
+            try {
+                authStore.login({
+                    identifier: userData.identifier,
+                    password: userData.password,
+                })
+            } catch (err) {
+                console.log(err)
+            }
+
         }
         const v$ = useValidate(rules, userData)
         return {
