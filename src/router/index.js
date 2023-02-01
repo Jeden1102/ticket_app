@@ -50,6 +50,49 @@ const routes = [{
         component: function() {
             return import ('../views/Account.vue')
         },
+        children: [{
+                path: 'DangerZone',
+                name: 'DangerZone',
+                component: function() {
+                    return import ('../components/Account/DangerZone.vue')
+                },
+            },
+            {
+                path: 'AccountEvents',
+                name: 'AccountEvents',
+                component: function() {
+                    return import ('../components/Account/Events.vue')
+                },
+            },
+            {
+                path: 'Help',
+                name: 'Help',
+                component: function() {
+                    return import ('../components/Account/Help.vue')
+                },
+            },
+            {
+                path: 'Profile',
+                name: 'Profile',
+                component: function() {
+                    return import ('../components/Account/Profile.vue')
+                },
+            },
+            {
+                path: 'Settings',
+                name: 'Settings',
+                component: function() {
+                    return import ('../components/Account/Settings.vue')
+                },
+            },
+            {
+                path: 'Statistics',
+                name: 'Statistics',
+                component: function() {
+                    return import ('../components/Account/Statistics.vue')
+                },
+            },
+        ],
         meta: {
             auth: true,
         }
