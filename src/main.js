@@ -14,6 +14,9 @@ import VueGoogleMaps from '@fawmi/vue-google-maps'
 
 import { createValidation } from 'vue3-form-validation'
 
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 const validation = createValidation({
     defaultValidationBehavior: 'lazy',
     validationBehavior: {
@@ -25,6 +28,7 @@ const validation = createValidation({
 
 const app = createApp(App);
 app.use(createPinia());
+app.component('Datepicker', Datepicker);
 app.use(validation);
 app.use(VueNumber)
     .use(VueGoogleMaps, {

@@ -1,79 +1,81 @@
 <template>
     <div class="account__container container">
-        <div class="account__container__main">
-            <h1>Profile</h1>
-            <div class="account__container__header" :class="{ 'account__container__header--collapsed': !fullMenu }">
-                <img src="@/assets/avatars/avatar.svg" alt="">
-                <div v-if="fullMenu" class="details">
-                    <h2>{{ authStore.user.username }}</h2>
-                    <h3>{{ authStore.user.email }}</h3>
+        <TransitionGroup name="list">
+            <div class="account__container__main">
+                <h1>Profile</h1>
+                <div class="account__container__header" :class="{ 'account__container__header--collapsed': !fullMenu }">
+                    <img src="@/assets/avatars/avatar.svg" alt="">
+                    <div v-if="fullMenu" class="details">
+                        <h2>{{ authStore.user.username }}</h2>
+                        <h3>{{ authStore.user.email }}</h3>
+                    </div>
                 </div>
+                <div class="account__container__links" :class="{ 'account__container__links--collapsed': !fullMenu }">
+                    <router-link :to="{ name: 'Profile' }">
+                        <div class="icon"><font-awesome-icon icon="fa-solid fa-user" /></div>
+                        <div v-if="fullMenu">
+                            <p>My Account</p>
+                            <span>Change your account details</span>
+                        </div>
+                        <span v-if="fullMenu" class="show__more">&gt;</span>
+                    </router-link>
+                    <router-link :to="{ name: 'DangerZone' }">
+                        <div class="icon"><font-awesome-icon icon="fa-solid fa-triangle-exclamation" /></div>
+                        <div v-if="fullMenu">
+                            <p>Danger Zone</p>
+                            <span>Change password & delete account</span>
+                        </div>
+                        <span v-if="fullMenu" class="show__more">&gt;</span>
+                    </router-link>
+                    <router-link :to="{ name: 'Statistics' }">
+                        <div class="icon"><font-awesome-icon icon="fa-solid fa-chart-line" /></div>
+                        <div v-if="fullMenu">
+                            <p>Statistics</p>
+                            <span>Check your stats!</span>
+                        </div>
+                        <span v-if="fullMenu" class="show__more">&gt;</span>
+                    </router-link>
+                    <router-link :to="{ name: 'AccountEvents' }">
+                        <div class="icon"><font-awesome-icon icon="fa-solid fa-calendar-days" /></div>
+                        <div v-if="fullMenu">
+                            <p>Events</p>
+                            <span>Everything about your events</span>
+                        </div>
+                        <span v-if="fullMenu" class="show__more">&gt;</span>
+                    </router-link>
+                </div>
+                <p class="others">More</p>
+                <div class="account__container__links" :class="{ 'account__container__links--collapsed': !fullMenu }">
+                    <router-link :to="{ name: 'Settings' }">
+                        <div class="icon"><font-awesome-icon icon="fa-solid fa-gear" /></div>
+                        <div v-if="fullMenu">
+                            <p>Settings</p>
+                            <span>Customize your app</span>
+                        </div>
+                        <span v-if="fullMenu" class="show__more">&gt;</span>
+                    </router-link>
+                    <router-link :to="{ name: 'Help' }">
+                        <div class="icon"><font-awesome-icon icon="fa-solid fa-circle-info" /></div>
+                        <div v-if="fullMenu">
+                            <p>Help</p>
+                            <span>Need some help?</span>
+                        </div>
+                        <span v-if="fullMenu" class="show__more">&gt;</span>
+                    </router-link>
+                </div>
+                <button @click="logout" class="logout__btn">
+                    <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />
+                    <span v-if="fullMenu">Logout</span>
+                </button>
             </div>
-            <div class="account__container__links" :class="{ 'account__container__links--collapsed': !fullMenu }">
-                <router-link :to="{ name: 'Profile' }">
-                    <div class="icon"><font-awesome-icon icon="fa-solid fa-user" /></div>
-                    <div v-if="fullMenu">
-                        <p>My Account</p>
-                        <span>Change your account details</span>
-                    </div>
-                    <span v-if="fullMenu" class="show__more">&gt;</span>
-                </router-link>
-                <router-link :to="{ name: 'DangerZone' }">
-                    <div class="icon"><font-awesome-icon icon="fa-solid fa-triangle-exclamation" /></div>
-                    <div v-if="fullMenu">
-                        <p>Danger Zone</p>
-                        <span>Change password & delete account</span>
-                    </div>
-                    <span v-if="fullMenu" class="show__more">&gt;</span>
-                </router-link>
-                <router-link :to="{ name: 'Statistics' }">
-                    <div class="icon"><font-awesome-icon icon="fa-solid fa-chart-line" /></div>
-                    <div v-if="fullMenu">
-                        <p>Statistics</p>
-                        <span>Check your stats!</span>
-                    </div>
-                    <span v-if="fullMenu" class="show__more">&gt;</span>
-                </router-link>
-                <router-link :to="{ name: 'AccountEvents' }">
-                    <div class="icon"><font-awesome-icon icon="fa-solid fa-calendar-days" /></div>
-                    <div v-if="fullMenu">
-                        <p>Events</p>
-                        <span>Everything about your events</span>
-                    </div>
-                    <span v-if="fullMenu" class="show__more">&gt;</span>
+            <div class="account__container__view">
+                <router-view class="about__view" :user="authStore.user"></router-view>
+                <router-link v-if="!fullMenu" class="back__btn" :to="{ name: 'Account' }">
+                    <span class="show__more">&lt;</span>
+                    <p>Return</p>
                 </router-link>
             </div>
-            <p class="others">More</p>
-            <div class="account__container__links" :class="{ 'account__container__links--collapsed': !fullMenu }">
-                <router-link :to="{ name: 'Settings' }">
-                    <div class="icon"><font-awesome-icon icon="fa-solid fa-gear" /></div>
-                    <div v-if="fullMenu">
-                        <p>Settings</p>
-                        <span>Customize your app</span>
-                    </div>
-                    <span v-if="fullMenu" class="show__more">&gt;</span>
-                </router-link>
-                <router-link :to="{ name: 'Help' }">
-                    <div class="icon"><font-awesome-icon icon="fa-solid fa-circle-info" /></div>
-                    <div v-if="fullMenu">
-                        <p>Help</p>
-                        <span>Need some help?</span>
-                    </div>
-                    <span v-if="fullMenu" class="show__more">&gt;</span>
-                </router-link>
-            </div>
-            <button @click="logout" class="logout__btn">
-                <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />
-                <span v-if="fullMenu">Logout</span>
-            </button>
-        </div>
-        <div class="account__container__view">
-            <router-view></router-view>
-            <router-link v-if="!fullMenu" class="back__btn" :to="{ name: 'Account' }">
-                <span class="show__more">&lt;</span>
-                <p>Return</p>
-            </router-link>
-        </div>
+        </TransitionGroup>
     </div>
 </template>
 
@@ -111,6 +113,17 @@ export default {
     h1 {
         font-size: 24px;
         font-weight: 500;
+    }
+
+    .list-enter-active,
+    .list-leave-active {
+        transition: all 0.5s ease;
+    }
+
+    .list-enter-from,
+    .list-leave-to {
+        opacity: 0;
+        transform: translateX(30px);
     }
 
     &__header {
@@ -206,6 +219,7 @@ export default {
 
                 svg {
                     color: white;
+                    width: 35px;
                 }
             }
 
@@ -218,11 +232,18 @@ export default {
         }
 
         &--collapsed {
-            padding: 3px;
+            padding: 4px 3px;
         }
     }
 
     &__view {
+        width: 100%;
+        max-width: 550px;
+
+        .about__view {
+            max-width: 550px;
+        }
+
         .back__btn {
             display: flex;
             @include button-base($secondary-blue, white);
