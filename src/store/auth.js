@@ -9,22 +9,16 @@ export const useAuthStore = defineStore('auth', {
     }),
     actions: {
         register(user) {
-            console.log(user)
-            axios.post(`${process.env.VUE_APP_API_URL}auth/local/register`, user).then(res => {
+            axios.post(`${process.env.VUE_APP_API_URL}auth/local/register?populate=*`, user).then(res => {
                 this.setUserData(res.data)
-                router.push({ name: 'Account' })
-                console.log(res)
             }).catch(err => {
                 console.log(err)
                 this.registerError = err.response.data.error.message
             })
         },
         login(user) {
-            console.log(user)
-            axios.post(`${process.env.VUE_APP_API_URL}auth/local`, user).then(res => {
-                this.setUserData(res.data)
-                router.push({ name: 'Account' })
-                console.log(res)
+            axios.post(`${process.env.VUE_APP_API_URL}auth/local?populate=*`, user).then(res => {
+                this.getUserData(res.data.jwt)
             }).catch(err => {
                 this.loginError = err.response.data.error.message
             })
@@ -35,10 +29,35 @@ export const useAuthStore = defineStore('auth', {
             localStorage.removeItem('go-tickets__jwt');
             router.push({ name: 'Home' })
         },
+        getUserData(jwt) {
+            const config = {
+                headers: { Authorization: `Bearer ${jwt}` }
+            };
+            localStorage.setItem('go-tickets__jwt', jwt);
+            axios.get(`${process.env.VUE_APP_API_URL}users/me?populate=*`, config).then(res => {
+                this.setUserData(res.data)
+            }).catch(err => {
+                console.log(err)
+                this.loginError = err.response.data.error.message
+            })
+        },
         setUserData(data) {
-            this.user = data.user
-            localStorage.setItem('go-tickets__user', JSON.stringify(data.user));
-            localStorage.setItem('go-tickets__jwt', data.jwt);
+            this.user = data
+            localStorage.setItem('go-tickets__user', JSON.stringify(data));
+            router.push({ name: 'Account' })
+        },
+        refreshUserData() {
+            const config = {
+                headers: { Authorization: `Bearer ${localStorage.getItem('go-tickets__jwt')}` }
+            };
+            axios.get(`${process.env.VUE_APP_API_URL}users/me?populate=*`, config).then(res => {
+                this.user = res.data
+                localStorage.setItem('go-tickets__user', JSON.stringify(res.data));
+                console.log(this.user)
+            }).catch(err => {
+                console.log(err)
+                this.loginError = err.response.data.error.message
+            })
         },
         checkUserLoggedIn() {
             if (!localStorage.getItem('go-tickets__jwt')) return;
