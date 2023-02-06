@@ -7,20 +7,28 @@
         </div>
         <div class="profile__general card">
             <input type="text" placeholder="JohnDoe" v-model="localUser.username">
-            <span class="error-box" v-if="v$.username.$error"> {{ v$.username.$errors[0].$message }} </span>
+            <span class="error-box" v-if="v$.username && v$.username.$error"> {{ v$.username.$errors[0].$message }}
+            </span>
         </div>
         <div class="profile__personal card">
             <input type="text" placeholder="John" v-model="localUser.name">
+            <span class="error-box" v-if="v$.name.$error"> {{ v$.name.$errors[0].$message }} </span>
             <input type="text" placeholder="Doe" v-model="localUser.surname">
+            <span class="error-box" v-if="v$.surname.$error"> {{ v$.surname.$errors[0].$message }} </span>
             <input type="text" placeholder="+48 512 093 332" v-model="localUser.phone_number">
+            <span class="error-box" v-if="v$.phone_number.$error"> {{ v$.phone_number.$errors[0].$message }} </span>
+            {{ getAddress }}
+            <span v-if="user.address">{{ user.address.formatted_address }}</span>
             <GMapAutocomplete @place_changed="setPlace" v-model="localUser.location" id="event-place"
-                placeholder="Address">
+                placeholder="New Adddress">
             </GMapAutocomplete>
             <Datepicker v-model="localUser.birth_date" :enable-time-picker="false"></Datepicker>
         </div>
         <div class="profile__personal card">
             <input type="text" placeholder="NIP" v-model="localUser.nip">
+            <span class="error-box" v-if="v$.nip.$error"> {{ v$.nip.$errors[0].$message }} </span>
             <input type="text" placeholder="PESEL" v-model="localUser.pesel">
+            <span class="error-box" v-if="v$.pesel.$error"> {{ v$.pesel.$errors[0].$message }} </span>
         </div>
         <button @click="updateUserDetails">Save Details</button>
     </div>
@@ -29,7 +37,9 @@
 <script>
 import { computed } from 'vue';
 import useValidate from '@vuelidate/core'
-import { required, minLength, email } from '@vuelidate/validators'
+import { required, minLength, maxLength } from '@vuelidate/validators'
+import { useUserStore } from '../../store/user'
+import { useToast } from "vue-toastification";
 export default {
     props: {
         user: {
@@ -38,17 +48,64 @@ export default {
         }
     },
     setup(props) {
+        const toast = useToast();
+        const userStore = useUserStore()
         const localUser = computed(() => {
             return props.user
         })
+        const getAddress = computed(() => {
+            if (!localUser.value.address)
+                return '';
+            return JSON.parse(localUser.value.address).formatted_address
+        })
         const rules = computed(() => {
-            return {
+            let rules = {
                 username: { required, minLength: minLength(6) },
-                email: { required, email },
+            };
+            const validations = [{
+                field: 'name',
+                validation: { minLength: minLength(2) }
+            },
+            {
+                field: 'surname',
+                validation: { minLength: minLength(2) }
+            },
+            {
+                field: 'address',
+                validation: { minLength: minLength(2) }
+            },
+            {
+                field: 'phone_number',
+                validation: { minLength: minLength(7), maxLength: maxLength(11) }
+            },
+            {
+                field: 'location',
+                validation: { minLength: minLength(7) }
+            },
+            {
+                field: 'nip',
+                validation: { minLength: minLength(9), maxLength: maxLength(10) }
+            },
+            {
+                field: 'pesel',
+                validation: { minLength: minLength(7), maxLength: maxLength(11) }
             }
+            ]
+            validations.forEach(val => {
+                if (localUser.value[val.field]) {
+                    rules[val.field] = val.validation
+                } else {
+                    rules[val.field] = {}
+                }
+            });
+
+            return rules
+        })
+        const test = computed(() => {
+            return localUser.value.name
         })
         function setPlace(place) {
-            console.log(place)
+            localUser.value.address = JSON.stringify(place)
         }
         function getImageURL(avatar) {
             return `${process.env.VUE_APP_IMAGES_API}${avatar.url}`;
@@ -57,8 +114,15 @@ export default {
             this.v$.$validate()
 
             if (this.v$.$error) {
-                console.log("sometgin rong")
+                toast.error("There was some error updating profile details", {
+                    timeout: 5000
+                });
+                return
             }
+            toast.info("Profile updated succesfully!", {
+                timeout: 5000
+            });
+            userStore.updateUser(localUser.value)
         }
         const v$ = useValidate(rules, localUser)
 
@@ -68,7 +132,11 @@ export default {
             getImageURL,
             updateUserDetails,
             v$,
-            rules
+            test,
+            rules,
+            userStore,
+            getAddress,
+            toast
         }
     }
 }
