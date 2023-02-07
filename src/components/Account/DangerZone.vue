@@ -22,6 +22,12 @@
         <div class="profile__personal card">
             <p>Delete accout</p>
             <span>Notice! Operation in not reversable!</span>
+            <span class="error-box" v-if="deleteAccountTriggered">All of your data such as user details, events history
+                or statistics will be lost! Type your password and click 'confirm' to remove your account. </span>
+            <input v-if="deleteAccountTriggered" type="password" placeholder="Password" v-model="deleteAccountPwd">
+            <button class="delete__account" @click="deleteAccount">
+                {{ deleteAccountTriggered? 'Confirm': 'Delete account' }}
+            </button>
         </div>
     </div>
 </template>
@@ -40,7 +46,8 @@ export default {
         }
     },
     setup(props) {
-
+        const deleteAccountTriggered = ref(false);
+        const deleteAccountPwd = ref(null);
         const toast = useToast();
         const pwdChange = ref({
             oldPassword: null,
@@ -67,6 +74,13 @@ export default {
 
             userStore.changePassword({ currentPassword: pwdChange.value.oldPassword, password: pwdChange.value.newPassword, passwordConfirmation: pwdChange.value.passwordRepeat })
         }
+        function deleteAccount() {
+            if (!deleteAccountTriggered.value) {
+                deleteAccountTriggered.value = true;
+                return
+            }
+            userStore.removeAccount(deleteAccountPwd.value)
+        }
         const v$ = useValidate(rules, pwdChange)
 
         return {
@@ -76,7 +90,10 @@ export default {
             rules,
             userStore,
             toast,
-            pwdChange
+            pwdChange,
+            deleteAccountPwd,
+            deleteAccountTriggered,
+            deleteAccount
         }
     }
 }
@@ -85,6 +102,7 @@ export default {
 <style lang="scss" scoped>
 .profile {
     @include glass-card;
+    box-shadow: 0px 5px 67px -43px rgb(66 68 90);
 
     .error-box {
         background: rgb(255, 215, 215);
@@ -123,6 +141,10 @@ export default {
 
     button {
         @include button-base($primary-blue, white);
+
+        &.delete__account {
+            @include button-base(rgb(255, 43, 43), white);
+        }
     }
 }
 </style>

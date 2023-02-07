@@ -69,7 +69,11 @@
                 </button>
             </div>
             <div class="account__container__view">
-                <router-view class="about__view" :user="authStore.user"></router-view>
+                <router-view class="about__view" :user="authStore.user" v-slot="{ Component }">
+                    <transition name="fade" mode="out-in">
+                        <component :is="Component" />
+                    </transition>
+                </router-view>
                 <router-link v-if="!fullMenu" class="back__btn" :to="{ name: 'Account' }">
                     <span class="show__more">&lt;</span>
                     <p>Return</p>
@@ -267,5 +271,15 @@ export default {
             height: 40px;
         }
     }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>

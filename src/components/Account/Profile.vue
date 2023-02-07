@@ -1,7 +1,7 @@
 <template>
     <div class="profile">
         <div class="profile__heading ">
-            <div class="avatar__box">
+            <div v-if="localUser.avatar" class="avatar__box">
                 <input @change="setAvatar" id="avatar" type="file">
                 <label for="avatar">
                     <img v-if="!avatarPreview" :src="getImageURL(localUser.avatar)" alt="">
@@ -123,6 +123,9 @@ export default {
             localUser.value.address = JSON.stringify(place)
         }
         function getImageURL(avatar) {
+            if (!avatar) {
+                return '';
+            }
             return `${process.env.VUE_APP_IMAGES_API}${avatar.url}`;
         }
         function updateUserDetails() {
@@ -163,6 +166,7 @@ export default {
 <style lang="scss" scoped>
 .profile {
     @include glass-card;
+    box-shadow: 0px 5px 67px -43px rgb(66 68 90);
 
     .error-box {
         background: rgb(255, 215, 215);

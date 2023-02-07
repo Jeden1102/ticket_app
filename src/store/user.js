@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useToast } from 'vue-toastification'
 const toast = useToast()
+import { useAuthStore } from './auth'
 export const useUserStore = defineStore('user', {
     state: () => ({
         changePasswordError: null,
@@ -35,6 +36,11 @@ export const useUserStore = defineStore('user', {
                     }
 
                     if (key === 'birth_date') {
+                        console.log(user[key])
+                        if (user[key] === null) {
+                            data.append(key, null);
+                            continue
+                        }
                         if (typeof(user[key]) !== 'string') {
                             data.append(key, new Date(user[key]).toISOString().slice(0, 10));
                             continue
@@ -44,8 +50,11 @@ export const useUserStore = defineStore('user', {
                         }
                     }
 
-                    data.append(key, user[key]);
+                    if (user[key] === null) {
+                        data.append(key, '');
+                    }
 
+                    data.append(key, user[key]);
                 }
             }
             const config = {
@@ -82,5 +91,26 @@ export const useUserStore = defineStore('user', {
                 });
             })
         },
+        removeAccount(password) {
+            axios.post(`${process.env.VUE_APP_API_URL}auth/local?populate=*`, {
+                identifier: useAuthStore().user.username,
+                password: password
+            }).then(res => {
+                console.log(res)
+                const config = {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('go-tickets__jwt')}` }
+                };
+                axios.delete(`${process.env.VUE_APP_API_URL}users/${useAuthStore().user.id}`, config).then((res) => {
+                    console.log(res)
+                }).catch(err => {
+                    console.log(err)
+                })
+            }).catch(err => {
+                console.log(err)
+                toast.error("Invalid password", {
+                    timeout: 5000
+                });
+            })
+        }
     }
 })

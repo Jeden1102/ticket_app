@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import router from '../router';
+import { useToast } from 'vue-toastification'
+const toast = useToast()
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         user: null,
@@ -10,7 +12,7 @@ export const useAuthStore = defineStore('auth', {
     actions: {
         register(user) {
             axios.post(`${process.env.VUE_APP_API_URL}auth/local/register?populate=*`, user).then(res => {
-                this.setUserData(res.data)
+                this.getUserData(res.data.jwt)
             }).catch(err => {
                 console.log(err)
                 this.registerError = err.response.data.error.message
@@ -42,9 +44,12 @@ export const useAuthStore = defineStore('auth', {
             })
         },
         setUserData(data) {
+            toast.info("Logged in succesfully!", {
+                timeout: 5000
+            });
             this.user = data
             localStorage.setItem('go-tickets__user', JSON.stringify(data));
-            router.push({ name: 'Account' })
+            router.push({ name: 'Home' })
         },
         refreshUserData() {
             const config = {
@@ -56,7 +61,9 @@ export const useAuthStore = defineStore('auth', {
                 console.log(this.user)
             }).catch(err => {
                 console.log(err)
-                this.loginError = err.response.data.error.message
+                this.user = null;
+                localStorage.removeItem('go-tickets__user');
+                localStorage.removeItem('go-tickets__jwt');
             })
         },
         checkUserLoggedIn() {
