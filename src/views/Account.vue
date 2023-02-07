@@ -110,6 +110,10 @@ export default {
         width: calc(100% - 20px);
     }
 
+    @media(min-width:1200px) {
+        gap: 64px;
+    }
+
     h1 {
         font-size: 24px;
         font-weight: 500;
@@ -189,6 +193,10 @@ export default {
             border-radius: 8px;
             transition: .2s;
 
+            &.router-link-active {
+                background: rgba(158, 176, 233, 0.2);
+            }
+
             &:hover {
                 transition: .2s;
                 background: rgba(121, 150, 237, .2);
@@ -250,6 +258,13 @@ export default {
             height: fit-content;
             gap: 12px;
             padding: 6px;
+            position: fixed;
+            right: 0;
+            bottom: 110px;
+            width: 100px;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
         }
     }
 }

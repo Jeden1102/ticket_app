@@ -1,7 +1,13 @@
 <template>
     <div class="profile">
         <div class="profile__heading ">
-            <img :src="getImageURL(localUser.avatar)" alt="">
+            <div class="avatar__box">
+                <input @change="setAvatar" id="avatar" type="file">
+                <label for="avatar">
+                    <img v-if="!avatarPreview" :src="getImageURL(localUser.avatar)" alt="">
+                    <img v-else :src="avatarPreview" alt="">
+                </label>
+            </div>
             <h2>{{ user.username }}</h2>
             <h3>{{ user.email }}</h3>
         </div>
@@ -35,7 +41,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import useValidate from '@vuelidate/core'
 import { required, minLength, maxLength } from '@vuelidate/validators'
 import { useUserStore } from '../../store/user'
@@ -48,6 +54,8 @@ export default {
         }
     },
     setup(props) {
+        const avatar = ref(null);
+        const avatarPreview = ref(null);
         const toast = useToast();
         const userStore = useUserStore()
         const localUser = computed(() => {
@@ -104,6 +112,13 @@ export default {
         const test = computed(() => {
             return localUser.value.name
         })
+        function setAvatar(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            avatar.value = files[0]
+            avatarPreview.value = URL.createObjectURL(files[0])
+        }
         function setPlace(place) {
             localUser.value.address = JSON.stringify(place)
         }
@@ -122,7 +137,7 @@ export default {
             toast.info("Profile updated succesfully!", {
                 timeout: 5000
             });
-            userStore.updateUser(localUser.value)
+            userStore.updateUser(localUser.value, avatar.value)
         }
         const v$ = useValidate(rules, localUser)
 
@@ -136,7 +151,10 @@ export default {
             rules,
             userStore,
             getAddress,
-            toast
+            toast,
+            setAvatar,
+            avatar,
+            avatarPreview
         }
     }
 }
@@ -167,8 +185,17 @@ export default {
         justify-content: center;
         align-items: center;
 
+        .avatar__box {
+            input {
+                display: none;
+            }
+        }
+
         img {
             max-width: 100px;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
         }
 
         h2 {
