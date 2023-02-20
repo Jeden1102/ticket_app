@@ -19,11 +19,18 @@ export default {
   },
   setup() {
     const authStore = useAuthStore();
+    function checkAppMode() {
+      if (localStorage.getItem('go-tickets__dark') === 'true') {
+        document.querySelector('#app').classList.add('app-dark')
+      }
+    }
     onMounted(() => {
+      checkAppMode()
       authStore.checkUserLoggedIn()
     })
     return {
-      authStore
+      authStore,
+      checkAppMode
     }
   }
 }
