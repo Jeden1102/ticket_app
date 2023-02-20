@@ -7,8 +7,7 @@
             <h3 class="title">
                 {{ review.attributes.title }}
             </h3>
-            <h5 class="desc">
-                {{ review.attributes.description }}
+            <h5 class="desc" v-html="review.attributes.description">
             </h5>
             <div class="event">
                 <p class="event_title">{{ review.attributes.event.data.attributes.Title }}</p>
@@ -50,7 +49,7 @@ export default {
     @media(min-width:992px) {
         display: flex;
         align-items: center;
-        padding:30px 0;
+        padding: 30px 0;
     }
 
     &__image {
@@ -60,7 +59,7 @@ export default {
             border-radius: 15px;
 
             @media(min-width:992px) {
-                height:90%;
+                height: 90%;
             }
         }
     }
