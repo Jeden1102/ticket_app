@@ -132,6 +132,16 @@ const routes = [{
             },
         ]
     },
+    {
+        path: '/create-event',
+        name: 'CreateEvent',
+        component: function() {
+            return import ('../views/CreateEvent.vue')
+        },
+        meta: {
+            auth: true,
+        }
+    },
 ]
 
 const router = createRouter({

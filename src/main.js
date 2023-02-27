@@ -17,6 +17,7 @@ import { createValidation } from 'vue3-form-validation'
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import Toast, { POSITION } from "vue-toastification";
+import CKEditor from '@ckeditor/ckeditor5-vue';
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css";
 const validation = createValidation({
@@ -33,6 +34,7 @@ app.use(createPinia());
 app.component('Datepicker', Datepicker);
 app.use(validation);
 app.use(VueNumber)
+app.use(CKEditor)
 app.use(Toast, {
         position: POSITION.BOTTOM_RIGHT
     })
