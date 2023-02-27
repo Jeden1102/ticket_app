@@ -1,23 +1,21 @@
 <template>
     <div class="stepper">
-        <button v-for="step, idx in steps" :key="step"
-            :class="[idx <= currentStep ? 'active' : '', idx == currentStep ? 'current' : '', 'stepper__step']">
+        <button v-for="step, idx in createEventStore.steps" :key="step"
+            :class="[idx <= createEventStore.currentStep ? 'active' : '', idx == createEventStore.currentStep ? 'current' : '', 'stepper__step']">
         </button>
     </div>
 </template>
 
 <script>
+import {useCreateEventStore} from '../../store/create_event';
 export default {
-    props: {
-        steps: {
-            type: Array,
-            required: true,
-        },
-        currentStep: {
-            type: Number,
-            required: true,
+    setup() {
+        const createEventStore=  useCreateEventStore()
+
+        return {
+            createEventStore
         }
-    },
+    }
 }
 </script>
 

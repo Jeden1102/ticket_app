@@ -1,27 +1,29 @@
 <template>
     <div class="create__event container">
         <div class="create__event__heading">
-            <h1>Hi <b>{{ authStore.user.username }}</b>!</h1>
-            <p>
-                You've got <b>basic</b> plan. Want to upgrade?
-            </p>
-            <div class="flex">
-                <button>Upgrade my plan</button>
-                <button @click="createEventToggled = true">Create event</button>
+            <div v-if="!createEventToggled">
+                <h1>Hi <b>{{ authStore.user.username }}</b>!</h1>
+                <p>
+                    You've got <b>basic</b> plan. Want to upgrade?
+                </p>
+                <div  class="flex">
+                    <button>Upgrade my plan</button>
+                    <button @click="createEventToggled = true">Create event</button>
+                </div>
             </div>
             <div v-if="createEventToggled" class="create__event__content">
                 <div>
-                    <Stepper :steps="steps" :currentStep="currentStep" @change-step="changeStep" />
+                    <Stepper  />
                 </div>
                 <div>
                     <KeepAlive>
                         <Transition name="fade" mode="out-in">
-                            <component class="card" :is="steps[currentStep]"></component>
+                            <component class="card" :is="createEventStore.steps[createEventStore.currentStep]"></component>
                         </Transition>
                     </KeepAlive>
                 </div>
                 <div>
-                    <StepperNavigation :steps="steps" :currentStep="currentStep" @change-step="changeStep" />
+                    <StepperNavigation  />
                 </div>
             </div>
         </div>
@@ -37,6 +39,8 @@ import TicketsStep from '../components/CreateEvent/TicketsStep.vue';
 import SummaryStep from '../components/CreateEvent/SummaryStep.vue';
 import Stepper from '../components/CreateEvent/Stepper.vue';
 import StepperNavigation from '../components/CreateEvent/StepperNavigation.vue';
+import {useCreateEventStore} from '../store/create_event';
+
 export default {
     components: {
         GeneralInfoStep,
@@ -49,27 +53,12 @@ export default {
     setup() {
         const authStore = useAuthStore()
         const createEventToggled = ref(false)
-        const steps = ['GeneralInfoStep', 'SettingsStep', 'TicketsStep', 'SummaryStep']
-        const currentStep = ref(0);
-        function changeStep(direction) {
-            let newStep = currentStep.value;
-            if (direction === 'next' || direction === 'prev') {
-                if (direction === 'next') {
-                    newStep = ++currentStep.value;
-                } else {
-                    newStep = --currentStep.value;
-                }
-            } else {
-                newStep = direction
-            }
-            currentStep.value = newStep;
-        }
+        const createEventStore=  useCreateEventStore()
+
         return {
             authStore,
             createEventToggled,
-            steps,
-            currentStep,
-            changeStep
+            createEventStore
         }
     }
 }

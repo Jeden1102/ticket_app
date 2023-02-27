@@ -1,32 +1,24 @@
 <template>
     <div class="navigation">
-        <button class="navigation__back" @click="changeStep('prev')" :disabled="currentStep == 0">Back</button>
+        <button class="navigation__back" @click="changeStep('prev')" :disabled="createEventStore.currentStep == 0">Back</button>
         <button class="navigation__next" @click="changeStep('next')"
-            :disabled="currentStep === steps.length - 1">Next</button>
+            :disabled="createEventStore.currentStep === createEventStore.steps.length - 1">Next</button>
     </div>
 </template>
 
 <script>
-
+import {useCreateEventStore} from '../../store/create_event';
 export default {
-    props: {
-        steps: {
-            type: Array,
-            required: true,
-        },
-        currentStep: {
-            type: Number,
-            required: true,
-        }
-    },
-    setup(props, { emit }) {
+    setup() {
+        const createEventStore=  useCreateEventStore()
         // @todo na kliknięciu 'next' walidacja danych i jeśli ok to przechodzimy
         function changeStep(direction) {
-            emit('change-step', direction)
+            createEventStore.changeStep(direction);
         }
 
         return {
-            changeStep
+            changeStep,
+            createEventStore
         }
     }
 }
