@@ -15,7 +15,9 @@
                 </div>
                 <div>
                     <KeepAlive>
-                        <component class="card" :is="steps[currentStep]"></component>
+                        <Transition name="fade" mode="out-in">
+                            <component class="card" :is="steps[currentStep]"></component>
+                        </Transition>
                     </KeepAlive>
                 </div>
                 <div>
@@ -74,6 +76,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
 .create__event {
 
     &__heading {
