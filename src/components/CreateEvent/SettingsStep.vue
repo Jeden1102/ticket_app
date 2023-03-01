@@ -1,6 +1,8 @@
 <template>
   <div class="step step__general">
+    {{ filesUrl }}
     <h3 class="step__title">
+      {{ createEventsStore.eventData.step_2.Main_image }}
       Event settings <font-awesome-icon icon="fa-solid fa-gear" />
     </h3>
     <div class="step__field step__field--checkbox">
@@ -71,11 +73,40 @@
         </svg>
       </div>
     </div>
-    <div class="step__field">
+    <div class="step__field step__field--images">
       <label for="">Images</label>
-      <div v-for="i in imagesCount" :key="i" class="image__box">
-        <label :for="'image-' + i">image{{ i }}</label>
-        <input :id="'image-' + i" type="file" />
+      <div class="images">
+        <div v-for="i in imagesCount" :key="i" class="image__box">
+          <font-awesome-icon
+            v-if="!createEventsStore.filesUrl[i - 1]"
+            icon="fa-solid fa-plus"
+          />
+          <font-awesome-icon
+            @click="removeFile(i)"
+            v-if="createEventsStore.filesUrl[i - 1]"
+            icon="fa-solid fa-minus"
+          />
+          <font-awesome-icon
+            @click="setMainImage(i)"
+            v-if="createEventsStore.filesUrl[i - 1]"
+            icon="fa-solid fa-star"
+            :class="{
+              active: i - 1 === createEventsStore.eventData.step_2.Main_image,
+            }"
+          />
+          <label :for="'image-' + i">
+            <img
+              v-if="createEventsStore.filesUrl[i - 1]"
+              :src="createEventsStore.filesUrl[i - 1]"
+              alt=""
+            />
+          </label>
+          <input
+            @change="onFileChange($event, i)"
+            :id="'image-' + i"
+            type="file"
+          />
+        </div>
       </div>
     </div>
     <button @click="validateStep" class="validation__btn-0"></button>
@@ -83,9 +114,12 @@
 </template>
 
 <script>
+//@TODO somehow categories - only id ?
+// @TODO attendatd to 0 , event place to formatted_address, geolocation as whole json
 import { useCreateEventStore } from "../../store/create_event";
 import { useEventsStore } from "../../store/events";
 import { onMounted, computed } from "vue";
+import { useToast } from "vue-toastification";
 
 import useValidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
@@ -94,6 +128,8 @@ export default {
   setup() {
     const eventsStore = useEventsStore();
     const createEventsStore = useCreateEventStore();
+    const toast = useToast();
+
     const imagesCount = 6;
     const rules = computed(() => {
       return {
@@ -113,7 +149,25 @@ export default {
       }
       createEventsStore.validationErrors = false;
     }
-
+    function onFileChange(e, key) {
+      toast.info("Image added succesfully!", {
+        timeout: 5000,
+      });
+      const file = e.target.files[0];
+      createEventsStore.filesUrl[key - 1] = URL.createObjectURL(file);
+    }
+    function removeFile(idx) {
+      toast.info("Image removed succesfuly!", {
+        timeout: 5000,
+      });
+      createEventsStore.filesUrl[idx - 1] = null;
+    }
+    function setMainImage(idx) {
+      toast.info("Image set as main.", {
+        timeout: 5000,
+      });
+      createEventsStore.eventData.step_2.Main_image = idx - 1;
+    }
     onMounted(() => {
       eventsStore.getEventCategories();
     });
@@ -125,6 +179,9 @@ export default {
       validateStep,
       v$,
       imagesCount,
+      onFileChange,
+      removeFile,
+      setMainImage,
     };
   },
 };
@@ -139,6 +196,75 @@ export default {
 
       .checkbox-wrapper-12 {
         @include checkbox();
+      }
+    }
+    .images {
+      display: flex;
+      gap: 24px;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+    .image__box {
+      position: relative;
+      .fa-plus {
+        transition: 0.2s;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        font-size: 1rem;
+        transform: translate(-50%, -50%);
+        border: 2px solid $secondary-blue;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        padding: 10px;
+        color: $secondary-blue;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .fa-minus,
+      .fa-star {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: white;
+        background: red;
+        font-size: 1.2rem;
+        padding: 5px;
+        border-radius: 5px;
+        z-index: 2;
+        cursor: pointer;
+      }
+      .fa-star {
+        left: 10px;
+        background: $secondary-blue;
+        &.active {
+          color: yellow;
+        }
+      }
+      input {
+        display: none;
+      }
+      label {
+        width: 250px;
+        height: 150px;
+        border: 2px dashed $secondary-blue;
+        display: block;
+        border-radius: 4px;
+        position: relative;
+        cursor: pointer;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        &:hover {
+          .fa-plus {
+            transform: translate(-50%, -50%) scale(1.1);
+          }
+          background: rgb(247, 247, 255);
+        }
       }
     }
   }
