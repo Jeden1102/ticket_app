@@ -32,7 +32,7 @@
         >
           <input
             v-model="createEventsStore.eventData.step_1.category"
-            :value="category.attributes.Name"
+            :value="category.id"
             name="category"
             :id="category.attributes.Name"
             type="radio"
@@ -123,9 +123,7 @@ export default {
     }
 
     function setPlace(place) {
-      console.log(place);
-      createEventsStore.location = place;
-      console.log(createEventsStore.location);
+      createEventsStore.eventData.step_1.location = place;
     }
     onMounted(() => {
       eventsStore.getEventCategories();

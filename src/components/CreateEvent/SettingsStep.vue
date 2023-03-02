@@ -6,6 +6,7 @@
       Event settings <font-awesome-icon icon="fa-solid fa-gear" />
     </h3>
     <div class="step__field step__field--checkbox">
+      <!-- <RestrictedContent group="basic" /> -->
       <label for="cbx-12">Show as featured</label>
       <div class="checkbox-wrapper-12">
         <div class="cbx">
@@ -77,6 +78,8 @@
       <label for="">Images</label>
       <div class="images">
         <div v-for="i in imagesCount" :key="i" class="image__box">
+          <!-- <RestrictedContent v-if="i > 1" group="basic" /> -->
+
           <font-awesome-icon
             v-if="!createEventsStore.filesUrl[i - 1]"
             icon="fa-solid fa-plus"
@@ -114,17 +117,16 @@
 </template>
 
 <script>
-//@TODO somehow categories - only id ?
-// @TODO attendatd to 0 , event place to formatted_address, geolocation as whole json
 import { useCreateEventStore } from "../../store/create_event";
 import { useEventsStore } from "../../store/events";
 import { onMounted, computed } from "vue";
 import { useToast } from "vue-toastification";
+// import RestrictedContent from "@/components/RestrictedContent.vue";
 
 import useValidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 export default {
-  components: {},
+  // components: { RestrictedContent },
   setup() {
     const eventsStore = useEventsStore();
     const createEventsStore = useCreateEventStore();
@@ -155,12 +157,20 @@ export default {
       });
       const file = e.target.files[0];
       createEventsStore.filesUrl[key - 1] = URL.createObjectURL(file);
+      createEventsStore.eventData.step_2.images.push({
+        key: key,
+        img: e.target.files[0],
+      });
+      console.log(createEventsStore.eventData.step_2.images);
     }
     function removeFile(idx) {
       toast.info("Image removed succesfuly!", {
         timeout: 5000,
       });
       createEventsStore.filesUrl[idx - 1] = null;
+      createEventsStore.eventData.step_2.images =
+        createEventsStore.eventData.step_2.images.filter((x) => x.key !== idx);
+      console.log(createEventsStore.eventData.step_2.images);
     }
     function setMainImage(idx) {
       toast.info("Image set as main.", {
@@ -190,6 +200,8 @@ export default {
 <style lang="scss" scoped>
 .step {
   &__field {
+    position: relative;
+    padding: 4px;
     &--checkbox {
       display: flex;
       gap: 8px;

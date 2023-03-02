@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { useToast } from 'vue-toastification'
+const toast = useToast()
 export const useCreateEventStore = defineStore('create_event', {
     state: () => ({
         currentStep: 0,
@@ -19,12 +21,12 @@ export const useCreateEventStore = defineStore('create_event', {
                 description: '',
                 location: '',
                 date: '',
-                category: null,
+                category: 5,
             },
             step_2: {
                 featured: false,
                 published: false,
-                Main_image: null,
+                Main_image: 0,
                 images: [],
             }
         }
@@ -32,7 +34,6 @@ export const useCreateEventStore = defineStore('create_event', {
     }),
     actions: {
         createEvent() {
-            console.log(this.eventData.step_2.Main_image)
             const config = {
                 method: 'post',
                 url: `${process.env.VUE_APP_API_URL}events`,
@@ -48,16 +49,41 @@ export const useCreateEventStore = defineStore('create_event', {
                         Featured: this.eventData.step_2.featured,
                         Main_image: this.eventData.step_2.Main_image,
                         Date: new Date(this.eventData.step_1.date).toISOString(),
+                        attendants: 0,
+                        Location: this.eventData.step_1.location.formatted_address,
+                        geolocation: this.eventData.step_1.location,
+                        event_category: this.eventData.step_1.category,
                     }
                 })
             };
             axios(config)
-                .then(function(res) {
-                    console.log(res)
+                .then((res) => {
+                    let formData = new FormData();
+                    formData.append('ref', 'api::event.event')
+                    formData.append('refId', res.data.data.id)
+                    formData.append('field', 'Images')
+                    this.eventData.step_2.images.forEach(img => {
+                        formData.append(`files`, img.img, img.img.name)
+                    })
+                    toast.info("Event added succesfully!", {
+                        timeout: 5000
+                    });
+                    axios.post(`${process.env.VUE_APP_API_URL}upload`, formData).then(res => {
+                        console.log(res)
+                    }).catch(err => {
+                        console.log(err)
+
+                    })
                 })
                 .catch(function(err) {
                     console.log(err);
+                    toast.error("There was some error :(", {
+                        timeout: 5000
+                    });
                 });
+        },
+        uploadEventFiles(res) {
+            console.log(res)
         },
         changeStep(direction) {
             // Validate step
