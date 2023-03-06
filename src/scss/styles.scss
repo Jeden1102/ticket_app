@@ -45,6 +45,12 @@
     display: flex;
 }
 
+.multiselect {
+    input {
+        border: none !important;
+    }
+}
+
 .multiselect__option {
     &--highlight {
         background-color: $secondary-blue !important;

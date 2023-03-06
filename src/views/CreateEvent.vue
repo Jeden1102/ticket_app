@@ -40,7 +40,6 @@ import { ref } from "vue";
 import GeneralInfoStep from "../components/CreateEvent/GeneralInfoStep.vue";
 import SettingsStep from "../components/CreateEvent/SettingsStep.vue";
 import TicketsStep from "../components/CreateEvent/TicketsStep.vue";
-import SummaryStep from "../components/CreateEvent/SummaryStep.vue";
 import Stepper from "../components/CreateEvent/Stepper.vue";
 import StepperNavigation from "../components/CreateEvent/StepperNavigation.vue";
 import { useCreateEventStore } from "../store/create_event";
@@ -50,7 +49,6 @@ export default {
     GeneralInfoStep,
     SettingsStep,
     TicketsStep,
-    SummaryStep,
     Stepper,
     StepperNavigation,
   },

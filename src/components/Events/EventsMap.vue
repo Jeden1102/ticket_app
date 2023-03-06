@@ -9,21 +9,22 @@
       <marker-cluster
         :options="{ showCoverageOnHover: false, chunkedLoading: true }"
       >
-        <l-marker
-          v-for="event in eventsStore.events"
-          :key="event.id"
-          :lat-lng="[
-            event.attributes.geolocation.geometry.location.lat,
-            event.attributes.geolocation.geometry.location.lng,
-          ]"
-        >
-          <l-icon
-            :icon-url="
-              setIconImg(event.attributes.event_category.data.attributes.Name)
-            "
-            :icon-size="[30, 30]"
-          />
-        </l-marker>
+        <template v-for="event in eventsStore.events" :key="event.id">
+          <l-marker
+            v-if="event.attributes.geolocation.geometry"
+            :lat-lng="[
+              event.attributes.geolocation.geometry.location.lat,
+              event.attributes.geolocation.geometry.location.lng,
+            ]"
+          >
+            <l-icon
+              :icon-url="
+                setIconImg(event.attributes.event_category.data.attributes.Name)
+              "
+              :icon-size="[30, 30]"
+            />
+          </l-marker>
+        </template>
       </marker-cluster>
     </l-map>
   </div>

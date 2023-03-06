@@ -10,13 +10,17 @@
     <button
       class="navigation__next"
       @click="changeStep('next')"
-      :disabled="
-        createEventStore.currentStep === createEventStore.steps.length - 1
-      "
+      v-if="createEventStore.currentStep !== createEventStore.steps.length - 1"
     >
       Next
     </button>
-    <button @click="createEvent">Add event</button>
+    <button
+      @click="createEvent"
+      class="navigation__add"
+      v-if="createEventStore.currentStep === createEventStore.steps.length - 1"
+    >
+      Add event
+    </button>
   </div>
 </template>
 
@@ -28,6 +32,7 @@ export default {
     // @todo na kliknięciu 'next' walidacja danych i jeśli ok to przechodzimy
     function changeStep(direction) {
       createEventStore.changeStep(direction);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
     function createEvent() {
       createEventStore.createEvent();
@@ -52,6 +57,10 @@ export default {
 
   &__next {
     @include button-primary;
+  }
+
+  &__add {
+    @include button-base(rgb(0, 139, 0), white);
   }
 
   &__back,

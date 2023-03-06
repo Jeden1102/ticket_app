@@ -5,7 +5,7 @@ const toast = useToast()
 export const useCreateEventStore = defineStore('create_event', {
     state: () => ({
         currentStep: 0,
-        steps: ['GeneralInfoStep', 'SettingsStep', 'TicketsStep', 'SummaryStep'],
+        steps: ['GeneralInfoStep', 'SettingsStep', 'TicketsStep'],
         validationErrors: null,
         filesUrl: {
             0: null,
@@ -29,7 +29,8 @@ export const useCreateEventStore = defineStore('create_event', {
                 Main_image: 0,
                 images: [],
             }
-        }
+        },
+        ticketPools: [{ id: Date.now() }]
 
     }),
     actions: {
@@ -68,6 +69,7 @@ export const useCreateEventStore = defineStore('create_event', {
                     toast.info("Event added succesfully!", {
                         timeout: 5000
                     });
+                    this.createPools(res.data.data.id)
                     axios.post(`${process.env.VUE_APP_API_URL}upload`, formData).then(res => {
                         console.log(res)
                     }).catch(err => {
@@ -81,6 +83,41 @@ export const useCreateEventStore = defineStore('create_event', {
                         timeout: 5000
                     });
                 });
+        },
+        addNewPool(id) {
+            this.ticketPools.push({ id: id })
+        },
+        removePool(id) {
+            this.ticketPools = this.ticketPools.filter(pool => pool.id !== id)
+        },
+        createPools(eventID) {
+            this.ticketPools.forEach(pool => {
+                const config = {
+                    method: 'post',
+                    url: `${process.env.VUE_APP_API_URL}ticket-pools`,
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('go-tickets__jwt')}`,
+                        "Content-Type": "application/json",
+                    },
+                    data: JSON.stringify({
+                        data: {
+                            type: pool.types,
+                            variant: pool.variant,
+                            price: pool.price,
+                            amount: pool.amount,
+                            event: eventID,
+                        }
+                    })
+                };
+                axios(config)
+                    .then((res) => {
+                        console.log(res)
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+            })
+
         },
         uploadEventFiles(res) {
             console.log(res)

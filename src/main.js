@@ -3,13 +3,13 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faHouse, faCalendarDays, faCircleInfo, faArrowRightFromBracket, faUser, faFire, faLocationDot, faX, faStar, faCheck, faPhone, faPlus, faMinus, faTriangleExclamation, faChartLine, faGear } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faCalendarDays, faCircleInfo, faTicket, faArrowRightFromBracket, faUser, faFire, faLocationDot, faX, faStar, faCheck, faPhone, faPlus, faMinus, faTriangleExclamation, faChartLine, faGear } from "@fortawesome/free-solid-svg-icons";
 import { faComments } from "@fortawesome/free-regular-svg-icons";
 import { faFacebook, faInstagram, faPinterest, faRocketchat } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createPinia } from 'pinia'
 import VueNumber from 'vue-number-animation'
-library.add(faHouse, faGear, faStar, faArrowRightFromBracket, faTriangleExclamation, faCalendarDays, faChartLine, faCircleInfo, faUser, faFire, faLocationDot, faX, faCheck, faFacebook, faInstagram, faPinterest, faRocketchat, faComments, faPhone, faPlus, faMinus);
+library.add(faHouse, faTicket, faGear, faStar, faArrowRightFromBracket, faTriangleExclamation, faCalendarDays, faChartLine, faCircleInfo, faUser, faFire, faLocationDot, faX, faCheck, faFacebook, faInstagram, faPinterest, faRocketchat, faComments, faPhone, faPlus, faMinus);
 import VueGoogleMaps from '@fawmi/vue-google-maps'
 
 import { createValidation } from 'vue3-form-validation'
