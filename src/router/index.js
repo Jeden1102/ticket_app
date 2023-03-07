@@ -20,6 +20,17 @@ const routes = [{
         }
     },
     {
+        path: '/event',
+        children: [{
+            path: ':event',
+            name: 'Event',
+            props: true,
+            component: function() {
+                return import ('../views/Event.vue')
+            },
+        }, ]
+    },
+    {
         path: '/events',
         name: 'Events',
         component: function() {
@@ -42,6 +53,7 @@ const routes = [{
                     return import ('../components/Events/EventsList.vue')
                 },
             },
+
         ]
     },
     {

@@ -1,5 +1,10 @@
 <template>
-  <div class="event__card">
+  <router-link
+    v-if="event.attributes.Title"
+    :to="{ name: 'Event', params: { event: event.attributes.Title } }"
+    @click="saveEventData"
+    class="event__card"
+  >
     <div class="event__card__image">
       <img :src="getImageURL(event)" alt="" />
       <div class="event__card__badges">
@@ -51,13 +56,15 @@
         </div>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
+import { useEventsStore } from "../store/events";
 export default {
   props: ["event"],
-  setup() {
+  setup(props) {
+    const eventsStore = useEventsStore();
     function getImageURL(event) {
       if (!event.attributes.Main_image) {
         return "";
@@ -80,10 +87,15 @@ export default {
       }
       return arr;
     }
+    function saveEventData() {
+      eventsStore.savedEvent = props.event;
+    }
     return {
       getImageURL,
       formatDate,
       randomAvatars,
+      saveEventData,
+      eventsStore,
     };
   },
 };
