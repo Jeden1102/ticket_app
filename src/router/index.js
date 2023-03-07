@@ -31,6 +31,14 @@ const routes = [{
         }, ]
     },
     {
+        path: '/event/:event/purchase',
+        name: 'Purchase',
+        props: true,
+        component: function() {
+            return import ('../views/Purchase.vue')
+        },
+    },
+    {
         path: '/events',
         name: 'Events',
         component: function() {

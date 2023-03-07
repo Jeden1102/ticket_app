@@ -3,6 +3,7 @@ import axios from 'axios'
 export const useEventsStore = defineStore('events', {
     state: () => ({
         eventCategories: null,
+        eventTicketPool: null,
         events: null,
         eventsFeatured: null,
         eventsNewest: null,
@@ -85,6 +86,19 @@ export const useEventsStore = defineStore('events', {
             }).catch(err => {
                 console.log(err)
             })
+        },
+        getEventTicketPool(id) {
+            axios
+                .get(
+                    `${process.env.VUE_APP_API_URL}ticket-pools?[sort]=price&[filters][event][id][$eq]=${id}&populate=*`
+                )
+                .then((res) => {
+                    this.eventTicketPool = res.data.data
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         },
         getEventCategories() {
             axios.get(`${process.env.VUE_APP_API_URL}event-categories`).then(res => {

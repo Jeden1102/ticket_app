@@ -49,6 +49,16 @@
               >
             </button>
           </div>
+
+          <div class="sticky__item--last">
+            <p><font-awesome-icon icon="fa-solid fa-ticket" /> Get a ticket!</p>
+
+            <span
+              >Starts at
+              <b>{{ eventsStore.eventTicketPool[0].attributes.price }}$</b>
+            </span>
+            <button>Buy</button>
+          </div>
         </div>
       </div>
     </div>
@@ -107,10 +117,14 @@ export default {
           eventData.value = res.data.data[0].attributes;
           eventID.value = res.data.data[0].id;
           console.log(eventData.value);
+          getEventTicketPools();
         })
         .catch((err) => {
           console.log(err);
         });
+    }
+    function getEventTicketPools() {
+      eventsStore.getEventTicketPool(eventID.value);
     }
     return {
       eventsStore,
@@ -147,7 +161,7 @@ export default {
     .sticky {
       position: fixed;
       bottom: 100px;
-      width: 100%;
+      width: 92%;
       left: 0;
       @include glass-card;
       &__items {
@@ -165,6 +179,20 @@ export default {
         align-items: center;
         font-size: 1.1rem;
         font-weight: 600;
+        &--last {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          span {
+            b {
+              font-size: 1.4rem;
+            }
+          }
+          button {
+            margin-top: 7px;
+            @include button-base(rgb(224, 224, 55), rgb(0, 0, 0));
+          }
+        }
         button {
           @include button-primary;
           a {
@@ -180,6 +208,7 @@ export default {
         width: 23%;
         left: unset;
         transform: translateX(20px);
+        height: fit-content;
         &__items {
           display: block;
         }
@@ -204,6 +233,7 @@ export default {
       border-radius: 10px;
     }
     @media (min-width: 768px) {
+      min-width: 70%;
       width: 70%;
     }
   }
