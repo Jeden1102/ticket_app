@@ -27,6 +27,16 @@
             </div>
             <span v-if="fullMenu" class="show__more">&gt;</span>
           </router-link>
+          <router-link :to="{ name: 'MyTickets' }">
+            <div class="icon">
+              <font-awesome-icon icon="fa-solid fa-ticket" />
+            </div>
+            <div v-if="fullMenu">
+              <p>My Tickets</p>
+              <span>Check your tickets</span>
+            </div>
+            <span v-if="fullMenu" class="show__more">&gt;</span>
+          </router-link>
           <router-link :to="{ name: 'DangerZone' }">
             <div class="icon">
               <font-awesome-icon icon="fa-solid fa-triangle-exclamation" />

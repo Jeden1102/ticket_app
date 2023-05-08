@@ -57,7 +57,11 @@
               >Starts at
               <b>{{ eventsStore.eventTicketPool[0].attributes.price }}$</b>
             </span>
-            <button>Buy</button>
+            <router-link
+              :to="{ name: 'Purchase', params: { event: eventData.Title } }"
+            >
+              <button>Buy ticket</button>
+            </router-link>
           </div>
         </div>
       </div>

@@ -161,7 +161,6 @@ export default {
         key: key,
         img: e.target.files[0],
       });
-      console.log(createEventsStore.eventData.step_2.images);
     }
     function removeFile(idx) {
       toast.info("Image removed succesfuly!", {
@@ -170,7 +169,6 @@ export default {
       createEventsStore.filesUrl[idx - 1] = null;
       createEventsStore.eventData.step_2.images =
         createEventsStore.eventData.step_2.images.filter((x) => x.key !== idx);
-      console.log(createEventsStore.eventData.step_2.images);
     }
     function setMainImage(idx) {
       toast.info("Image set as main.", {

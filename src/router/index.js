@@ -78,10 +78,17 @@ const routes = [{
                 },
             },
             {
-                path: 'AccountEvents',
+                path: 'MyTickets',
                 name: 'AccountEvents',
                 component: function() {
                     return import ('../components/Account/Events.vue')
+                },
+            },
+            {
+                path: 'MyTickets',
+                name: 'MyTickets',
+                component: function() {
+                    return import ('../components/Account/MyTickets.vue')
                 },
             },
             {

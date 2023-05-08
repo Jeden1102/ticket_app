@@ -7,7 +7,6 @@ export const useFaqsStore = defineStore('faqs', {
     actions: {
         getFaqs() {
             axios.get(`${process.env.VUE_APP_API_URL}faqs?populate=*`).then(res => {
-                console.log("BLOGI")
                 this.faqs = res.data.data;
             }).catch(err => {
                 console.log(err)

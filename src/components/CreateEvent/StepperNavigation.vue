@@ -29,7 +29,6 @@ import { useCreateEventStore } from "../../store/create_event";
 export default {
   setup() {
     const createEventStore = useCreateEventStore();
-    // @todo na kliknięciu 'next' walidacja danych i jeśli ok to przechodzimy
     function changeStep(direction) {
       createEventStore.changeStep(direction);
       window.scrollTo({ top: 0, behavior: "smooth" });

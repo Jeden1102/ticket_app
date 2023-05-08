@@ -75,11 +75,9 @@ export const useEventsStore = defineStore('events', {
                     })
                 }
             }
-            console.log(`${process.env.VUE_APP_API_URL}events${groupingString}${filterString}?${pagination}&populate=*`)
             axios.get(`${process.env.VUE_APP_API_URL}events${groupingString}${filterString}?${pagination}&populate=*`).then(res => {
                 if (!filter.name) {
                     this.events = res.data.data
-                    console.log(this.events)
                 } else {
                     this[filter.name] = res.data.data;
                 }
@@ -94,7 +92,6 @@ export const useEventsStore = defineStore('events', {
                 )
                 .then((res) => {
                     this.eventTicketPool = res.data.data
-                    console.log(res);
                 })
                 .catch((err) => {
                     console.log(err);

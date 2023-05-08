@@ -58,7 +58,6 @@ export const useAuthStore = defineStore('auth', {
             axios.get(`${process.env.VUE_APP_API_URL}users/me?populate=*`, config).then(res => {
                 this.user = res.data
                 localStorage.setItem('go-tickets__user', JSON.stringify(res.data));
-                console.log(this.user)
             }).catch(err => {
                 console.log(err)
                 this.user = null;
