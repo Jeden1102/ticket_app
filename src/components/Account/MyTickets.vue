@@ -1,37 +1,82 @@
 <template>
   <div class="my-tickets">
-    My tickets
     <div class="ticket" v-for="ticket in tickets" :key="ticket.id">
       <div class="ticket__event-data">
-        <h3>
+        <p class="title">
           {{
             ticket.attributes.ticket_pool.data.attributes.event.data.attributes
               .Title
           }}
-        </h3>
-        <h5>
+        </p>
+        <p>
           {{
-            ticket.attributes.ticket_pool.data.attributes.event.data.attributes
-              .Date
+            formatDate(
+              ticket.attributes.ticket_pool.data.attributes.event.data
+                .attributes.Date
+            )
           }}
-        </h5>
-        <h6>
+        </p>
+        <p class="location">
           {{
             ticket.attributes.ticket_pool.data.attributes.event.data.attributes
               .Location
           }}
-        </h6>
-        <button>POKAŻ TRASĘ</button>
+        </p>
+        <a
+          class="show-route"
+          target="_blank"
+          title="Click to see the route"
+          :href="
+            'https://www.google.com/maps/dir//' +
+            ticket.attributes.ticket_pool.data.attributes.event.data.attributes
+              .Location
+          "
+          ><span> Show route </span></a
+        >
       </div>
       <div class="ticket__ticket-data">
         <div class="base">
-          <span>VIP</span>
-          <span>19.99</span>
+          <span class="badge">{{
+            ticket.attributes.ticket_pool.data.attributes.type
+          }}</span>
+          /
+          <span class="price"
+            >${{ ticket.attributes.ticket_pool.data.attributes.price }}</span
+          >
         </div>
-        <p>bum123@o2.pl</p>
-        <p>qr-xe-2e2e</p>
-        <p>QR_CODE</p>
-        <button>POBIERZ PDF</button>
+        <p class="type">
+          {{ ticket.attributes.ticket_pool.data.attributes.variant }}
+        </p>
+        <p>{{ ticket.attributes.email }}</p>
+        <p>{{ ticket.attributes.code }}</p>
+        <QRCodeVue3
+          :width="150"
+          :height="150"
+          :value="currentUrl"
+          :qrOptions="{
+            typeNumber: 0,
+            mode: 'Byte',
+            errorCorrectionLevel: 'H',
+          }"
+          :imageOptions="{
+            hideBackgroundDots: true,
+            imageSize: 0.4,
+            margin: 0,
+          }"
+          :dotsOptions="{
+            type: 'dots',
+            color: '#26249a',
+            gradient: {
+              type: 'linear',
+              rotation: 0,
+              colorStops: [
+                { offset: 0, color: '#424AFF' },
+                { offset: 1, color: '#7996ED' },
+              ],
+            },
+          }"
+        />
+        <button class="download-pdf">Get PDF</button>
       </div>
     </div>
   </div>
@@ -40,16 +85,34 @@
 <script>
 import { useTicketsStore } from "../../store/tickets";
 import { onMounted, computed } from "vue";
+/* eslint-disable no-unused-vars */
+import QRCodeVue3 from "qrcode-vue3";
 export default {
+  components: {
+    QRCodeVue3,
+  },
   setup() {
     const ticketsStore = useTicketsStore();
     onMounted(() => {
       ticketsStore.getUserTickets();
     });
-    const tickets = computed(() => {
-      return ticketsStore.userTickets.data;
+    function formatDate(date) {
+      const newDate = new Date(date);
+      const month = newDate.toLocaleString("default", { month: "short" });
+      const day = newDate.getDay();
+      const year = newDate.getFullYear();
+      return `${day} ${month} ${year}`;
+    }
+    const currentUrl = computed(() => {
+      return window.location.href;
     });
-    return { ticketsStore, tickets };
+    const tickets = computed(() => {
+      if (ticketsStore.userTickets) {
+        return ticketsStore.userTickets.data;
+      }
+      return null;
+    });
+    return { ticketsStore, tickets, formatDate, currentUrl };
   },
 };
 </script>
@@ -61,18 +124,57 @@ export default {
   flex-direction: column;
   gap: 16px;
   .ticket {
-    border: 1px solid $secondary-blue;
+    border: 1px solid rgba(121, 150, 237, 0.5);
     border-radius: 16px;
     padding: 16px;
     box-shadow: 0px 7px 23px -15px rgb(53, 53, 53);
     display: flex;
     justify-content: space-between;
+    .show-route {
+      @include button-base($primary-blue, white);
+      display: grid;
+      place-content: center;
+    }
     &__event-data {
+      margin-top: 12px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      .title {
+        font-size: 1.4rem;
+      }
+      .location {
+        font-size: 0.8rem;
+      }
       * {
         margin: 0;
+      }
+    }
+    &__ticket-data {
+      * {
+        margin: 8px 0;
+      }
+      .base {
+        margin: 0;
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        text-transform: uppercase;
+        .badge {
+          @include badge-base($secondary-blue, white);
+        }
+        .price {
+          font-weight: 500;
+          font-size: 1.1rem;
+        }
+      }
+      .type {
+        @include badge-base($light-blue, rgb(36, 36, 36));
+        border: 1px solid rgba(121, 150, 237, 0.5);
+        text-align: center;
+      }
+      .download-pdf {
+        @include button-base(rgb(224, 224, 55), rgb(48, 48, 48));
       }
     }
   }
