@@ -253,6 +253,11 @@ export default {
         @include badge-base($secondary-blue, white);
       }
     }
+    &__purchase {
+      button {
+        @include button-base($primary-blue, white);
+      }
+    }
     @media (min-width: 768px) {
       min-width: 70%;
       width: 70%;

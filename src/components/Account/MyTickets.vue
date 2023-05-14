@@ -1,7 +1,10 @@
 <template>
   <div class="my-tickets">
     <div class="ticket" v-for="ticket in tickets" :key="ticket.id">
-      <div class="ticket__event-data">
+      <div
+        class="ticket__event-data"
+        v-if="ticket.attributes.ticket_pool.data.attributes.event.data"
+      >
         <p class="title">
           {{
             ticket.attributes.ticket_pool.data.attributes.event.data.attributes
@@ -22,6 +25,7 @@
               .Location
           }}
         </p>
+
         <a
           class="show-route"
           target="_blank"
@@ -33,6 +37,22 @@
           "
           ><span> Show route </span></a
         >
+        <router-link
+          v-if="
+            ticket.attributes.ticket_pool.data.attributes.event.data.attributes
+              .ticket_refundable
+          "
+          :to="{
+            name: 'RefundTicket',
+            query: { code: ticket.attributes.code },
+          }"
+          class="refund-ticket"
+        >
+          <span>Refund ticket</span>
+        </router-link>
+        <div class="status-badge" :class="{ used: ticket.attributes.used }">
+          {{ ticket.attributes.used ? "Used" : "Active" }}
+        </div>
       </div>
       <div class="ticket__ticket-data">
         <div class="base">
@@ -130,10 +150,27 @@ export default {
     box-shadow: 0px 7px 23px -15px rgb(53, 53, 53);
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
+    @media (min-width: 768px) {
+      flex-direction: row;
+    }
     .show-route {
       @include button-base($primary-blue, white);
       display: grid;
       place-content: center;
+    }
+    .refund-ticket {
+      display: grid;
+      place-content: center;
+      margin-top: auto;
+      @include button-base(rgb(155, 155, 155), white);
+    }
+    .status-badge {
+      text-align: center;
+      @include badge-base(rgba(38, 143, 38, 0.7), white);
+      &.used {
+        @include badge-base(rgba(255, 0, 0, 0.6), white);
+      }
     }
     &__event-data {
       margin-top: 12px;

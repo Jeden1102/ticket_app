@@ -26,6 +26,7 @@ export const useCreateEventStore = defineStore('create_event', {
             step_2: {
                 featured: false,
                 published: false,
+                ticket_refundable: false,
                 Main_image: 0,
                 images: [],
             }
@@ -47,6 +48,7 @@ export const useCreateEventStore = defineStore('create_event', {
                         Title: this.eventData.step_1.name,
                         Description: this.eventData.step_1.description,
                         Published: this.eventData.step_2.published,
+                        ticket_refundable: this.eventData.step_2.ticket_refundable,
                         Featured: this.eventData.step_2.featured,
                         Main_image: this.eventData.step_2.Main_image,
                         Date: new Date(this.eventData.step_1.date).toISOString(),

@@ -169,6 +169,16 @@ const routes = [{
             auth: true,
         }
     },
+    {
+        path: '/refund-ticket',
+        name: 'RefundTicket',
+        component: function() {
+            return import ('../views/RefundTicket.vue')
+        },
+        meta: {
+            auth: false,
+        }
+    },
 ]
 
 const router = createRouter({
