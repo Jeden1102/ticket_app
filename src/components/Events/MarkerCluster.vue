@@ -63,8 +63,7 @@
       const { methods } = layerSetup(props, leafletRef, context);
   
       onMounted(async () => {
-        const { DomEvent, marker } = await import("leaflet/dist/leaflet-src.esm");
-        console.log(marker)
+        const { DomEvent } = await import("leaflet/dist/leaflet-src.esm");
   
         const { MarkerClusterGroup } = await import(
           "leaflet.markercluster/dist/leaflet.markercluster-src.js"

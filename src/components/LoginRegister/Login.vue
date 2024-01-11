@@ -66,7 +66,6 @@ export default {
         })
 
         function submitForm() {
-            console.log("TERAZZZ")
             this.v$.$validate()
             if (this.v$.$error) {
                 error.value = "Please fill out all fields correctly."

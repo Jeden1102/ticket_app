@@ -127,12 +127,6 @@ export default {
         function setPlace(place) {
             currentFilters.value.Location = place.formatted_address
             setFilter('Location');
-            // for (var i = 0; i < place.address_components.length; i++) {
-            //     if (place.address_components[i].types[0] === "locality" && place.address_components[i].types[1] === "political") {
-            //         console.log(place.address_components[i].long_name)
-            //         //tutaj mamy miasto i te miasto do filtrów ew ten formatted adres == locatio ni lepiej chyba tedy
-            //     }
-            // }
         }
 
         function clearAll() {

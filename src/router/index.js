@@ -140,7 +140,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    console.log(useAuthStore().user)
     if (to.name === 'LoginRegister') next({ name: 'Login' })
     if (!to.meta.auth && to.name !== 'Login' && to.name !== 'Register') next();
     if ((to.name === 'Login' || to.name === 'Register') && useAuthStore().user) next({ name: 'Account' })
