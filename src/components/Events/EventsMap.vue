@@ -10,7 +10,7 @@
             <div class="popup">
               <span class="popup__title">{{ event.attributes.Title }} </span>
               <span class="popup__location">{{ event.attributes.geolocation[0].display_name }} </span>
-              <span class="popup__location">{{ formatDate(event.attributes.Date)}} </span>
+              <span class="popup__location">{{ formatDate(event.attributes.Date) }} </span>
             </div>
           </l-popup>
           <l-icon :icon-url="setIconImg(event.attributes.event_category.data.attributes.Name)" :icon-size="[30, 30]" />
@@ -19,7 +19,7 @@
     </l-map>
   </div>
 </template>
-  
+
 <script>
 import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker, LIcon, LPopup } from "@vue-leaflet/vue-leaflet";
@@ -59,7 +59,7 @@ export default {
   }
 };
 </script>
-  
+
 <style lang="scss">
 .events__map {
   @include glass-card;

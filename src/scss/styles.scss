@@ -12,6 +12,11 @@
     .app-content {
         min-height: 40vh;
     }
+    background-color: white;
+    &.app-dark {
+        background: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%);
+        color: white;
+    }
 }
 
 .container {
@@ -40,6 +45,12 @@
     display: flex;
 }
 
+.multiselect {
+    input {
+        border: none !important;
+    }
+}
+
 .multiselect__option {
     &--highlight {
         background-color: $secondary-blue !important;
@@ -52,4 +63,20 @@
         padding: 10px !important;
         border-radius: 5px;
     }
+}
+
+.error-box {
+    background: rgb(255, 215, 215);
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid rgb(255, 198, 198);
+    margin: 2px 0;
+    display: block;
+    font-size: 0.9rem;
+    padding: 10px;
+    margin: 6px 0;
+}
+
+.validation__btn-0 {
+    display: none;
 }

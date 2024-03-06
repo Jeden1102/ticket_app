@@ -15,9 +15,11 @@
             <button class="hero__btn hero__btn--events">
               Events list
             </button>
-            <button class="hero__btn hero__btn--create-event">
-              Create an event
-            </button>
+            <router-link :to="{ name: 'CreateEvent' }">
+              <button class="hero__btn hero__btn--create-event">
+                Create an event
+              </button></router-link>
+
           </div>
         </div>
       </div>

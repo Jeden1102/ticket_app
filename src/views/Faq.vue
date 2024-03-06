@@ -31,7 +31,7 @@
         </div>
     </div>
 </template>
-`1`
+
 <script>
 import { useFaqsStore } from '../store/faqs';
 import { onMounted, ref } from 'vue';
