@@ -2,12 +2,7 @@
   <div class="login">
     <div class="login__box login__box--floating">
       <label for="login">
-        <input
-          v-model="userData.identifier"
-          type="text"
-          id="login"
-          placeholder="Login"
-        />
+        <input v-model="userData.identifier" type="text" id="login" placeholder="Login" />
         <span>Login</span>
       </label>
     </div>
@@ -16,12 +11,7 @@
     </span>
     <div class="login__box login__box--floating">
       <label for="password">
-        <input
-          v-model="userData.password"
-          type="password"
-          id="password"
-          placeholder="Password"
-        />
+        <input v-model="userData.password" type="password" id="password" placeholder="Password" />
         <span>Password</span>
       </label>
     </div>
@@ -45,17 +35,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
           <defs>
             <filter id="goo-12">
-              <fegaussianblur
-                in="SourceGraphic"
-                stddeviation="4"
-                result="blur"
-              ></fegaussianblur>
-              <fecolormatrix
-                in="blur"
-                mode="matrix"
-                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7"
-                result="goo-12"
-              ></fecolormatrix>
+              <fegaussianblur in="SourceGraphic" stddeviation="4" result="blur"></fegaussianblur>
+              <fecolormatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7"
+                result="goo-12"></fecolormatrix>
               <feblend in="SourceGraphic" in2="goo-12"></feblend>
             </filter>
           </defs>
@@ -141,8 +123,8 @@ export default {
       color: black;
     }
 
-    label:focus-within > span,
-    input:not(:placeholder-shown) + span {
+    label:focus-within>span,
+    input:not(:placeholder-shown)+span {
       transform: translateY(-15px);
       color: black;
     }

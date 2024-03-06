@@ -1,11 +1,11 @@
 <template>
-    <div class="pricing container">
+    <div class="pricing container" v-if="pricing">
         <h2>Our <span>pricing</span></h2>
         <div class="pricing__toggle">
             {{ pricingLabel }}
-            <Toggle v-model="pricingType" @change="changePricing"/>
+            <Toggle v-model="pricingType" @change="changePricing" />
         </div>
-        <div class="cards" v-if="pricingStore.pricings">
+        <div class="cards" v-if="pricingStore.pricings && pricing.pricingRest">
             <div class="card shadow">
                 <ul>
                     <li class="pack">{{ pricings.pricingRest[0].attributes.title }}</li>
@@ -15,12 +15,13 @@
                             :to="toNumber(pricings.pricingRest[0].attributes.price_month, pricings.pricingRest[0].attributes.price_year)"
                             :duration="3" :delay="0" easing="Power1.easeOut" />
                     </li>
-                    <li class="bottom-bar">{{ pricings.pricingRest[0].attributes.max_customers }}  customers max</li>
-                    <li class="bottom-bar">{{ pricings.pricingRest[0].attributes.max_events }}  events max</li>
+                    <li class="bottom-bar">{{ pricings.pricingRest[0].attributes.max_customers }} customers max</li>
+                    <li class="bottom-bar">{{ pricings.pricingRest[0].attributes.max_events }} events max</li>
                     <li class="bottom-bar">{{ pricings.pricingRest[0].attributes.max_admins }} Admins Allowed </li>
                     <li class="bottom-bar">{{ pricings.pricingRest[0].attributes.margin }} % / ticket margin</li>
-                    <li  class="bottom-bar">
-                        <font-awesome-icon v-if="pricings.pricingRest[0].attributes.custom_seats" icon="fa-solid fa-check" />
+                    <li class="bottom-bar">
+                        <font-awesome-icon v-if="pricings.pricingRest[0].attributes.custom_seats"
+                            icon="fa-solid fa-check" />
                         <font-awesome-icon v-else icon="fa-solid fa-x" />
                         Custom seats
                     </li>
@@ -45,8 +46,9 @@
                     <li class="bottom-bar">{{ pricings.pricingMain[0].attributes.max_events }} events max</li>
                     <li class="bottom-bar">{{ pricings.pricingMain[0].attributes.max_admins }} Admins Allowed </li>
                     <li class="bottom-bar">{{ pricings.pricingMain[0].attributes.margin }} % / ticket margin</li>
-                    <li  class="bottom-bar">
-                        <font-awesome-icon v-if="pricings.pricingMain[0].attributes.custom_seats" icon="fa-solid fa-check" />
+                    <li class="bottom-bar">
+                        <font-awesome-icon v-if="pricings.pricingMain[0].attributes.custom_seats"
+                            icon="fa-solid fa-check" />
                         <font-awesome-icon v-else icon="fa-solid fa-x" />
                         Custom seats
                     </li>
@@ -71,8 +73,9 @@
                     <li class="bottom-bar">{{ pricings.pricingRest[1].attributes.max_events }} events max</li>
                     <li class="bottom-bar">{{ pricings.pricingRest[1].attributes.max_admins }} Admins Allowed </li>
                     <li class="bottom-bar">{{ pricings.pricingRest[1].attributes.margin }} % / ticket margin</li>
-                    <li  class="bottom-bar">
-                        <font-awesome-icon v-if="pricings.pricingRest[1].attributes.custom_seats" icon="fa-solid fa-check" />
+                    <li class="bottom-bar">
+                        <font-awesome-icon v-if="pricings.pricingRest[1].attributes.custom_seats"
+                            icon="fa-solid fa-check" />
                         <font-awesome-icon v-else icon="fa-solid fa-x" />
                         Custom seats
                     </li>
@@ -97,15 +100,15 @@ export default {
     },
     data() {
         return {
-        pricingType :false,
-        pricingStore : usePricingStore()
+            pricingType: false,
+            pricingStore: usePricingStore()
         }
     },
-    computed:{
-        pricingLabel(){
+    computed: {
+        pricingLabel() {
             return this.pricingType ? 'Yearly' : 'Monthly'
         },
-        pricings(){
+        pricings() {
             if (!this.pricingStore.pricings) {
                 return false;
             }
@@ -119,18 +122,16 @@ export default {
         this.pricingStore.getPricings()
     },
     methods: {
-         fromNumber(monthly,yearly){
+        fromNumber(monthly, yearly) {
             return this.pricingType ? yearly : monthly;
         },
-         toNumber(monthly,yearly){
+        toNumber(monthly, yearly) {
             return this.pricingType ? yearly : monthly;
         },
     },
 }
 </script>
-<style src="@vueform/toggle/themes/default.css">
-
-</style>
+<style src="@vueform/toggle/themes/default.css"></style>
 <style lang="scss" scoped>
 .pricing {
     margin-top: 64px;
@@ -184,7 +185,7 @@ export default {
     background: #fff;
     color: hsl(233, 13%, 49%);
     border-radius: 0.8rem;
-    width:100%;
+    width: 100%;
 }
 
 .cards .card.active {
@@ -204,8 +205,8 @@ ul {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    width:70%;
-    margin:0 auto;
+    width: 70%;
+    margin: 0 auto;
 }
 
 ul li {
@@ -232,17 +233,17 @@ ul li.price {
 
 .btn {
     margin-top: 1rem;
-    @include button-base($secondary-blue,white);
+    @include button-base($secondary-blue, white);
 }
 
 .active-btn {
-    @include button-base(white,$secondary-blue);
+    @include button-base(white, $secondary-blue);
 }
 
 .bottom-bar {
     border-bottom: 2px solid hsla(240, 8%, 85%, 0.582);
-    display:flex;
-    gap:10px;
+    display: flex;
+    gap: 10px;
 }
 
 .card.active .bottom-bar {
@@ -254,7 +255,7 @@ ul li.price {
 }
 
 
-@media  (max-width: 768px) {
+@media (max-width: 768px) {
     .card {
         margin-bottom: 1rem;
         margin-right: 1rem;
@@ -263,7 +264,8 @@ ul li.price {
     .cards .card.active {
         transform: scale(1);
     }
-    .cards{
+
+    .cards {
         flex-direction: column;
     }
 }
